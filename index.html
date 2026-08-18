@@ -273,7 +273,59 @@ footer strong{color:#111}
 .cert-meta{margin-top:24px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;color:#444}
 .cert-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 @media(max-width:700px){.cert-form{grid-template-columns:1fr}.certificate-sheet{padding:34px 18px;min-height:500px}.cert-title{font-size:30px}.cert-name{font-size:28px}.cert-course{font-size:20px}}
-@media print{body *{visibility:hidden!important}#certificateSheet,#certificateSheet *{visibility:visible!important}#certificateSheet{position:absolute;left:0;top:0;width:100%;border:10px solid #111}}
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{
+    width:210mm!important;
+    height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  body>*{display:none!important}
+  #certModal{
+    display:block!important;
+    position:fixed!important;
+    inset:0!important;
+    width:210mm!important;
+    height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+    overflow:hidden!important;
+  }
+  #certModal .cert-panel{
+    display:block!important;
+    width:210mm!important;
+    height:297mm!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:10mm!important;
+    box-sizing:border-box!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  #certModal .cert-panel>div:not(#certificateSheet){display:none!important}
+  #certificateSheet{
+    display:flex!important;
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    width:190mm!important;
+    height:277mm!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:18mm 12mm!important;
+    box-sizing:border-box!important;
+    border:3mm solid #111!important;
+    overflow:hidden!important;
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+  #certificateSheet:before{inset:7mm!important}
+}
 
 
 .dashboard-wrap{max-width:1020px;margin:34px auto 0;padding:0}
