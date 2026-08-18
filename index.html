@@ -391,6 +391,58 @@ footer strong{color:#111}
   border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:700
 }
 
+
+.admin-entry-btn{
+  border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;
+  font-size:12px;font-weight:800
+}
+.admin-modal{
+  position:fixed;inset:0;z-index:15000;background:rgba(0,0,0,.72);
+  display:none;align-items:center;justify-content:center;padding:18px
+}
+.admin-box{
+  width:min(460px,100%);background:#fff;border-radius:18px;padding:22px;
+  border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.18)
+}
+.admin-box h3{margin:0 0 6px;font-size:24px}
+.admin-box p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.6}
+.admin-field{display:grid;gap:6px;margin-top:12px}
+.admin-field label{font-size:12px;font-weight:800}
+.admin-field input{
+  padding:12px 14px;border:1px solid var(--line);border-radius:10px;outline:none
+}
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.admin-panel{
+  position:fixed;inset:0;z-index:14900;background:#f5f6f7;display:none;overflow:auto
+}
+.admin-panel-inner{max-width:1000px;margin:0 auto;padding:24px 18px 60px}
+.admin-panel-head{
+  display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;
+  margin-bottom:20px
+}
+.admin-material-list{display:grid;gap:12px}
+.admin-material{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;
+  display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center
+}
+.admin-num{
+  width:42px;height:42px;border-radius:11px;background:#111;color:#fff;
+  display:grid;place-items:center;font-weight:800
+}
+.admin-material strong{display:block;font-size:14px}
+.admin-material small{display:block;color:var(--muted);margin-top:4px}
+.admin-material button{
+  border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:800
+}
+.admin-note{
+  margin-top:18px;padding:14px;border:1px solid #edd59b;background:#fff7e5;border-radius:12px;
+  font-size:12px;line-height:1.6;color:#6e5418
+}
+@media(max-width:700px){
+  .admin-material{grid-template-columns:42px 1fr}
+  .admin-material button{grid-column:1/-1;width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -452,6 +504,7 @@ footer strong{color:#111}
         <button class="menu-btn" id="menuBtn">☰</button>
         <div class="top-title">Halaman Belajar</div>
         <div class="top-actions">
+          <button class="admin-entry-btn" onclick="openAdminLogin()">Admin</button>
           <button class="icon-btn">☆</button>
           <button class="icon-btn">•••</button>
         </div>
@@ -1383,6 +1436,174 @@ function kgAutoLogin(){
 window.addEventListener("beforeunload",kgSaveActiveProfileData);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")kgSaveActiveProfileData();});
 document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
+
+</script>
+
+<div id="adminLoginModal" class="admin-modal">
+  <div class="admin-box">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+      <div>
+        <div class="eyebrow muted">🔐 AREA ADMIN</div>
+        <h3>Login Admin</h3>
+      </div>
+      <button class="icon-btn" onclick="closeAdminLogin()">×</button>
+    </div>
+    <p>Menu ini hanya untuk pengelola materi. Versi ini masih tahap panel admin; penggantian file server akan disambungkan pada tahap berikutnya.</p>
+    <div class="admin-field">
+      <label>Username</label>
+      <input id="adminUser" type="text" placeholder="admin">
+    </div>
+    <div class="admin-field">
+      <label>PIN Admin</label>
+      <input id="adminPin" type="password" inputmode="numeric" maxlength="6" placeholder="••••••">
+    </div>
+    <div class="admin-actions">
+      <button class="dark-btn" onclick="loginAdmin()">Masuk Admin</button>
+      <button class="secondary-light-btn" onclick="closeAdminLogin()">Batal</button>
+    </div>
+    <div id="adminLoginStatus" style="font-size:12px;margin-top:10px;color:#a33"></div>
+  </div>
+</div>
+
+<div id="adminPanel" class="admin-panel">
+  <div class="admin-panel-inner">
+    <div class="admin-panel-head">
+      <div>
+        <div class="eyebrow muted">⚙️ DASHBOARD ADMIN</div>
+        <h2 style="margin:6px 0 4px">Kelola Materi Video</h2>
+        <div style="color:var(--muted);font-size:13px">Kelola video Materi 1–10 dari satu halaman.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary-light-btn" onclick="adminBackToSite()">Lihat Website</button>
+        <button class="secondary-light-btn" onclick="logoutAdmin()">Keluar Admin</button>
+      </div>
+    </div>
+    <div class="admin-material-list">
+      <div class="admin-material">
+      <div class="admin-num">1</div>
+      <div><strong>Pengenalan Animasi AI</strong><small>File saat ini: materi1.mp4</small></div>
+      <button onclick="adminChooseVideo(1,'materi1.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">2</div>
+      <div><strong>Tools yang Dibutuhkan</strong><small>File saat ini: materi2.mp4</small></div>
+      <button onclick="adminChooseVideo(2,'materi2.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">3</div>
+      <div><strong>Membuat Ide &amp; Cerita</strong><small>File saat ini: Materi3.mp4</small></div>
+      <button onclick="adminChooseVideo(3,'Materi3.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">4</div>
+      <div><strong>Membuat Karakter AI</strong><small>File saat ini: Materi4.mp4</small></div>
+      <button onclick="adminChooseVideo(4,'Materi4.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">5</div>
+      <div><strong>Membuat Prompt</strong><small>File saat ini: Materi5.mp4</small></div>
+      <button onclick="adminChooseVideo(5,'Materi5.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">6</div>
+      <div><strong>Membuat Gambar</strong><small>File saat ini: Materi6.mp4</small></div>
+      <button onclick="adminChooseVideo(6,'Materi6.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">7</div>
+      <div><strong>Mengubah Gambar Menjadi Video</strong><small>File saat ini: Materi7.mp4</small></div>
+      <button onclick="adminChooseVideo(7,'Materi7.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">8</div>
+      <div><strong>Membuat Suara / Narasi</strong><small>File saat ini: Materi8.mp4</small></div>
+      <button onclick="adminChooseVideo(8,'Materi8.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">9</div>
+      <div><strong>Editing Video</strong><small>File saat ini: Materi9.mp4</small></div>
+      <button onclick="adminChooseVideo(9,'Materi9.mp4')">Ganti Video</button>
+    </div>
+<div class="admin-material">
+      <div class="admin-num">10</div>
+      <div><strong>Praktik Animasi Pertama</strong><small>File saat ini: Materi10.mp4</small></div>
+      <button onclick="adminChooseVideo(10,'Materi10.mp4')">Ganti Video</button>
+    </div>
+    </div>
+    <div class="admin-note">
+      <strong>Penting:</strong> pada versi GitHub + Netlify yang sekarang, tombol “Ganti Video” belum dapat mengubah file di server secara langsung.
+      Saat tombol ditekan, admin dapat memilih file baru dan melihat nama file yang dipilih. Tahap berikutnya adalah menyambungkan panel ini ke penyimpanan online/backend,
+      sehingga hanya admin yang dapat mengunggah dan mengganti video tanpa masuk GitHub.
+    </div>
+  </div>
+</div>
+
+<input id="adminVideoPicker" type="file" accept="video/*" style="display:none">
+
+<script>
+
+const KG_ADMIN_SESSION_KEY="kg_admin_session_v1";
+let kgAdminTarget={lesson:0,filename:""};
+
+function openAdminLogin(){
+  if(sessionStorage.getItem(KG_ADMIN_SESSION_KEY)==="1"){
+    openAdminPanel();
+    return;
+  }
+  document.getElementById("adminLoginModal").style.display="flex";
+}
+function closeAdminLogin(){
+  document.getElementById("adminLoginModal").style.display="none";
+  const s=document.getElementById("adminLoginStatus");
+  if(s) s.textContent="";
+}
+function loginAdmin(){
+  const u=(document.getElementById("adminUser").value||"").trim().toLowerCase();
+  const p=(document.getElementById("adminPin").value||"").trim();
+  const s=document.getElementById("adminLoginStatus");
+
+  // Prototype-only credential gate. This is not strong server-side security.
+  if(u==="admin" && p==="260826"){
+    sessionStorage.setItem(KG_ADMIN_SESSION_KEY,"1");
+    closeAdminLogin();
+    openAdminPanel();
+  }else{
+    s.textContent="Username atau PIN admin salah.";
+  }
+}
+function openAdminPanel(){
+  document.getElementById("adminPanel").style.display="block";
+  document.body.style.overflow="hidden";
+}
+function adminBackToSite(){
+  document.getElementById("adminPanel").style.display="none";
+  document.body.style.overflow="";
+}
+function logoutAdmin(){
+  sessionStorage.removeItem(KG_ADMIN_SESSION_KEY);
+  adminBackToSite();
+  alert("Admin sudah keluar.");
+}
+function adminChooseVideo(lesson,filename){
+  if(sessionStorage.getItem(KG_ADMIN_SESSION_KEY)!=="1"){
+    openAdminLogin();
+    return;
+  }
+  kgAdminTarget={lesson,filename};
+  const picker=document.getElementById("adminVideoPicker");
+  picker.value="";
+  picker.click();
+}
+document.addEventListener("change",function(e){
+  if(e.target && e.target.id==="adminVideoPicker" && e.target.files && e.target.files[0]){
+    const f=e.target.files[0];
+    alert(
+      "Video baru dipilih untuk Materi "+kgAdminTarget.lesson+
+      "\\n\\nFile: "+f.name+
+      "\\n\\nPada tahap berikutnya tombol ini akan kita sambungkan ke penyimpanan online agar file benar-benar mengganti "+kgAdminTarget.filename+" di website."
+    );
+  }
+});
 
 </script>
 </body>
