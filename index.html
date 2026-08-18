@@ -443,6 +443,13 @@ footer strong{color:#111}
   .admin-material button{grid-column:1/-1;width:100%}
 }
 
+
+.admin-video-wrap{grid-column:1/-1;margin-top:8px}
+.admin-video-wrap video{width:100%;max-height:260px;background:#000;border-radius:12px;display:block}
+.admin-video-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.admin-video-actions{display:flex;gap:8px;flex-wrap:wrap}
+.admin-status{font-size:12px;color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -1479,56 +1486,226 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       </div>
     </div>
     <div class="admin-material-list">
-      <div class="admin-material">
+
+    <div class="admin-material">
       <div class="admin-num">1</div>
-      <div><strong>Pengenalan Animasi AI</strong><small>File saat ini: materi1.mp4</small></div>
-      <button onclick="adminChooseVideo(1,'materi1.mp4')">Ganti Video</button>
+      <div>
+        <strong>Pengenalan Animasi AI</strong>
+        <small>File aktif: materi1.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="materi1.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus1">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(1,'materi1.mp4')">Ganti Video</button>
+            <button onclick="window.open('materi1.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">2</div>
-      <div><strong>Tools yang Dibutuhkan</strong><small>File saat ini: materi2.mp4</small></div>
-      <button onclick="adminChooseVideo(2,'materi2.mp4')">Ganti Video</button>
+      <div>
+        <strong>Tools yang Dibutuhkan</strong>
+        <small>File aktif: materi2.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="materi2.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus2">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(2,'materi2.mp4')">Ganti Video</button>
+            <button onclick="window.open('materi2.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">3</div>
-      <div><strong>Membuat Ide &amp; Cerita</strong><small>File saat ini: Materi3.mp4</small></div>
-      <button onclick="adminChooseVideo(3,'Materi3.mp4')">Ganti Video</button>
+      <div>
+        <strong>Membuat Ide & Cerita</strong>
+        <small>File aktif: Materi3.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi3.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus3">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(3,'Materi3.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi3.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">4</div>
-      <div><strong>Membuat Karakter AI</strong><small>File saat ini: Materi4.mp4</small></div>
-      <button onclick="adminChooseVideo(4,'Materi4.mp4')">Ganti Video</button>
+      <div>
+        <strong>Membuat Karakter AI</strong>
+        <small>File aktif: Materi4.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi4.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus4">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(4,'Materi4.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi4.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">5</div>
-      <div><strong>Membuat Prompt</strong><small>File saat ini: Materi5.mp4</small></div>
-      <button onclick="adminChooseVideo(5,'Materi5.mp4')">Ganti Video</button>
+      <div>
+        <strong>Membuat Prompt</strong>
+        <small>File aktif: Materi5.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi5.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus5">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(5,'Materi5.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi5.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">6</div>
-      <div><strong>Membuat Gambar</strong><small>File saat ini: Materi6.mp4</small></div>
-      <button onclick="adminChooseVideo(6,'Materi6.mp4')">Ganti Video</button>
+      <div>
+        <strong>Membuat Gambar</strong>
+        <small>File aktif: Materi6.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi6.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus6">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(6,'Materi6.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi6.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">7</div>
-      <div><strong>Mengubah Gambar Menjadi Video</strong><small>File saat ini: Materi7.mp4</small></div>
-      <button onclick="adminChooseVideo(7,'Materi7.mp4')">Ganti Video</button>
+      <div>
+        <strong>Mengubah Gambar Menjadi Video</strong>
+        <small>File aktif: Materi7.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi7.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus7">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(7,'Materi7.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi7.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">8</div>
-      <div><strong>Membuat Suara / Narasi</strong><small>File saat ini: Materi8.mp4</small></div>
-      <button onclick="adminChooseVideo(8,'Materi8.mp4')">Ganti Video</button>
+      <div>
+        <strong>Membuat Suara / Narasi</strong>
+        <small>File aktif: Materi8.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi8.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus8">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(8,'Materi8.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi8.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">9</div>
-      <div><strong>Editing Video</strong><small>File saat ini: Materi9.mp4</small></div>
-      <button onclick="adminChooseVideo(9,'Materi9.mp4')">Ganti Video</button>
+      <div>
+        <strong>Editing Video</strong>
+        <small>File aktif: Materi9.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi9.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus9">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(9,'Materi9.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi9.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
-<div class="admin-material">
+    
+
+    <div class="admin-material">
       <div class="admin-num">10</div>
-      <div><strong>Praktik Animasi Pertama</strong><small>File saat ini: Materi10.mp4</small></div>
-      <button onclick="adminChooseVideo(10,'Materi10.mp4')">Ganti Video</button>
+      <div>
+        <strong>Praktik Animasi Pertama</strong>
+        <small>File aktif: Materi10.mp4</small>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi10.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus10">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(10,'Materi10.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi10.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
     </div>
+    
     </div>
     <div class="admin-note">
       <strong>Penting:</strong> pada versi GitHub + Netlify yang sekarang, tombol “Ganti Video” belum dapat mengubah file di server secara langsung.
@@ -1597,14 +1774,18 @@ function adminChooseVideo(lesson,filename){
 document.addEventListener("change",function(e){
   if(e.target && e.target.id==="adminVideoPicker" && e.target.files && e.target.files[0]){
     const f=e.target.files[0];
+    const s=document.getElementById("adminStatus"+kgAdminTarget.lesson);
+    if(s){
+      s.textContent="Video baru dipilih: "+f.name+" — belum mengganti video di server.";
+      s.style.color="#8b6400";
+    }
     alert(
-      "Video baru dipilih untuk Materi "+kgAdminTarget.lesson+
+      "Video baru sudah dipilih untuk Materi "+kgAdminTarget.lesson+
       "\\n\\nFile: "+f.name+
-      "\\n\\nPada tahap berikutnya tombol ini akan kita sambungkan ke penyimpanan online agar file benar-benar mengganti "+kgAdminTarget.filename+" di website."
+      "\\n\\nAgar benar-benar mengganti video di website, upload file ini ke GitHub dengan nama persis: "+kgAdminTarget.filename
     );
   }
 });
-
 </script>
 </body>
 </html>
