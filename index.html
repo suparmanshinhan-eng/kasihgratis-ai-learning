@@ -450,6 +450,12 @@ footer strong{color:#111}
 .admin-video-actions{display:flex;gap:8px;flex-wrap:wrap}
 .admin-status{font-size:12px;color:var(--muted)}
 
+
+.admin-latest-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#e8f7ee;color:#1b7a46;font-size:11px;font-weight:800;margin-top:7px}
+.admin-current-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#f1f2f4;color:#555;font-size:11px;font-weight:800;margin-top:7px}
+.admin-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}
+@media(max-width:700px){.admin-summary-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -695,7 +701,7 @@ footer strong{color:#111}
 
           <div style="margin:20px 0 10px;font-weight:800">Video Pembelajaran</div>
           <video id="lessonVideo" controls playsinline preload="metadata" onerror="document.getElementById('videoMissingMsg').style.display='block'" onloadeddata="document.getElementById('videoMissingMsg').style.display='none'" style="width:100%;max-height:70vh;background:#000;border-radius:14px;display:block">
-            <source id="lessonVideoSource" src="materi1.mp4" type="video/mp4">
+            <source id="lessonVideoSource" src="materi1-baru.mp4" type="video/mp4">
             Browser Anda tidak mendukung pemutar video.
           </video>
 
@@ -877,7 +883,7 @@ renderCourses(courses);
 const animationLessons = [
   {
     title:"Pengenalan Animasi AI",
-    video:"materi1.mp4",
+    video:"materi1-baru.mp4",
     subtitle:"Kenali alur kerja dan hasil yang bisa dibuat.",
     body:`<h4>Apa yang dipelajari?</h4>
       <p>Animasi AI adalah proses membuat visual bergerak dengan bantuan alat AI. Untuk pemula, alurnya cukup sederhana: tentukan ide, buat karakter atau gambar, gerakkan gambar, tambahkan suara, lalu edit.</p>
@@ -1485,24 +1491,31 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
         <button class="secondary-light-btn" onclick="logoutAdmin()">Keluar Admin</button>
       </div>
     </div>
+    
+    <div class="admin-summary-grid">
+      <div class="stat-card"><div class="stat-label">Total Materi</div><div class="stat-value" style="font-size:24px">10</div></div>
+      <div class="stat-card"><div class="stat-label">Video Revisi</div><div class="stat-value" style="font-size:24px">1</div><div class="stat-note">Materi 1 terbaru</div></div>
+      <div class="stat-card"><div class="stat-label">Status Website</div><div class="stat-value" style="font-size:18px">Aktif</div><div class="stat-note">GitHub + Netlify</div></div>
+    </div>
+
     <div class="admin-material-list">
 
     <div class="admin-material">
       <div class="admin-num">1</div>
       <div>
         <strong>Pengenalan Animasi AI</strong>
-        <small>File aktif: materi1.mp4</small>
+        <small>File aktif: materi1-baru.mp4</small><span class="admin-latest-chip">✓ Video revisi terbaru</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
-          <source src="materi1.mp4" type="video/mp4">
+          <source src="materi1-baru.mp4" type="video/mp4">
           Browser tidak mendukung pemutar video.
         </video>
         <div class="admin-video-meta">
           <div class="admin-status" id="adminStatus1">Status: video aktif tersedia di website</div>
           <div class="admin-video-actions">
-            <button onclick="adminChooseVideo(1,'materi1.mp4')">Ganti Video</button>
-            <button onclick="window.open('materi1.mp4','_blank')">Buka Video</button>
+            <button onclick="adminChooseVideo(1,'materi1-baru.mp4')">Ganti Video</button>
+            <button onclick="window.open('materi1-baru.mp4','_blank')">Buka Video</button>
           </div>
         </div>
       </div>
@@ -1513,7 +1526,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">2</div>
       <div>
         <strong>Tools yang Dibutuhkan</strong>
-        <small>File aktif: materi2.mp4</small>
+        <small>File aktif: materi2.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1535,7 +1548,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">3</div>
       <div>
         <strong>Membuat Ide & Cerita</strong>
-        <small>File aktif: Materi3.mp4</small>
+        <small>File aktif: Materi3.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1557,7 +1570,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">4</div>
       <div>
         <strong>Membuat Karakter AI</strong>
-        <small>File aktif: Materi4.mp4</small>
+        <small>File aktif: Materi4.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1579,7 +1592,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">5</div>
       <div>
         <strong>Membuat Prompt</strong>
-        <small>File aktif: Materi5.mp4</small>
+        <small>File aktif: Materi5.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1601,7 +1614,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">6</div>
       <div>
         <strong>Membuat Gambar</strong>
-        <small>File aktif: Materi6.mp4</small>
+        <small>File aktif: Materi6.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1623,7 +1636,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">7</div>
       <div>
         <strong>Mengubah Gambar Menjadi Video</strong>
-        <small>File aktif: Materi7.mp4</small>
+        <small>File aktif: Materi7.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1645,7 +1658,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">8</div>
       <div>
         <strong>Membuat Suara / Narasi</strong>
-        <small>File aktif: Materi8.mp4</small>
+        <small>File aktif: Materi8.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1667,7 +1680,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">9</div>
       <div>
         <strong>Editing Video</strong>
-        <small>File aktif: Materi9.mp4</small>
+        <small>File aktif: Materi9.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
@@ -1689,7 +1702,7 @@ document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
       <div class="admin-num">10</div>
       <div>
         <strong>Praktik Animasi Pertama</strong>
-        <small>File aktif: Materi10.mp4</small>
+        <small>File aktif: Materi10.mp4</small><span class="admin-current-chip">Video aktif</span>
       </div>
       <div class="admin-video-wrap">
         <video controls playsinline preload="metadata">
