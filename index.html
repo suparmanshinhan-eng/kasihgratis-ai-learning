@@ -602,7 +602,7 @@ footer strong{color:#111}
           <p>Pilih jalur belajar di bawah atau cari topik yang kamu butuhkan.</p>
           <div class="quick-links">
             <button onclick="openLearningPath('animasi')">1. Belajar Bikin Animasi AI</button>
-            <button onclick="filterCategory('Gambar AI')">2. Belajar Bikin Gambar AI</button>
+            <button onclick="openGambarClass()">2. Belajar Bikin Gambar AI</button>
             <button onclick="filterCategory('Video AI')">3. Belajar Bikin Video AI</button>
             <button onclick="filterCategory('Prompt AI')">4. Belajar Prompt AI</button>
             <button onclick="filterCategory('ChatGPT')">5. Belajar ChatGPT</button>
@@ -736,6 +736,63 @@ footer strong{color:#111}
           </div>
           <div id="quizResult" class="quiz-result" style="display:none"></div>
         </div>
+
+
+      <section class="section" id="gambarClass" style="display:none">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow muted">🎨 KELAS INTERAKTIF</span>
+            <h2>Belajar Bikin Gambar AI</h2>
+          </div>
+          <button class="secondary-light-btn" onclick="closeGambarClass()">Kembali</button>
+        </div>
+
+        <div class="class-intro">
+          <div class="class-intro-text">
+            <span class="tag">Pemula</span>
+            <h3>Dari prompt sederhana sampai gambar AI siap dipakai</h3>
+            <p>Ikuti 10 materi secara berurutan. Setiap materi dapat diisi video, penjelasan, latihan, dan contoh prompt.</p>
+          </div>
+          <div class="class-progress-box">
+            <strong id="gambarCompletedText">0/10 selesai</strong>
+            <div class="progress big"><span id="gambarProgressBar" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="lesson-list" id="gambarLessonList"></div>
+
+        <div class="lesson-detail" id="gambarLessonDetail" style="display:none">
+          <div class="lesson-detail-top">
+            <div>
+              <span class="tag" id="gambarLessonNumber">Materi 1</span>
+              <h3 id="gambarLessonTitle">Judul Materi</h3>
+            </div>
+            <button class="icon-btn" onclick="closeGambarLesson()">×</button>
+          </div>
+
+          <div style="margin:20px 0 10px;font-weight:800">Video Pembelajaran</div>
+          <video id="gambarLessonVideo" controls playsinline preload="metadata"
+            style="width:100%;max-height:70vh;background:#000;border-radius:14px;display:block">
+            <source id="gambarLessonVideoSource" src="" type="video/mp4">
+            Browser Anda tidak mendukung pemutar video.
+          </video>
+
+          <div class="lesson-copy" id="gambarLessonBody"></div>
+
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <strong>Contoh Prompt</strong>
+              <button onclick="copyGambarPrompt()">Salin Prompt</button>
+            </div>
+            <pre id="gambarPromptText"></pre>
+          </div>
+
+          <div class="lesson-actions">
+            <button class="secondary-light-btn" onclick="markGambarComplete()">✓ Tandai Selesai</button>
+            <button class="dark-btn" onclick="nextGambarLesson()">Materi Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
 
 <section class="section" id="materi">
         <div class="section-title-row">
@@ -1799,6 +1856,72 @@ document.addEventListener("change",function(e){
     );
   }
 });
+</script>
+<script>
+
+const gambarLessons = [
+  {title:"Pengenalan Gambar AI",subtitle:"Kenali cara kerja dasar AI dalam membuat gambar.",video:"gambar1.mp4",body:`<h4>Apa yang dipelajari?</h4><p>Gambar AI adalah visual yang dibuat dengan bantuan kecerdasan buatan berdasarkan instruksi atau prompt.</p>`,prompt:"Buatkan gambar seorang guru sedang menjelaskan teknologi AI di kelas modern, gaya ilustrasi 3D, pencahayaan lembut, komposisi rapi."},
+  {title:"Mengenal Tools Pembuat Gambar AI",subtitle:"Pahami fungsi tools sebelum mulai praktik.",video:"gambar2.mp4",body:`<h4>Tools dasar</h4><p>Kita akan mengenal beberapa jenis tools AI gambar dan memahami kapan masing-masing paling cocok digunakan.</p>`,prompt:"Bandingkan alur kerja paling sederhana untuk membuat gambar AI menggunakan satu tools AI gambar dan satu aplikasi desain."},
+  {title:"Dasar-Dasar Prompt Gambar",subtitle:"Belajar menulis prompt yang jelas dan terarah.",video:"gambar3.mp4",body:`<h4>Struktur sederhana</h4><p>Prompt dasar bisa disusun dari subjek, aktivitas, lokasi, gaya, pencahayaan, warna, dan sudut kamera.</p>`,prompt:"[SUBJEK], sedang [AKTIVITAS], di [LOKASI], gaya [STYLE], pencahayaan [LIGHTING], warna [COLOR MOOD], sudut kamera [ANGLE]."},
+  {title:"Menentukan Subjek dan Karakter",subtitle:"Buat karakter yang jelas dan konsisten.",video:"gambar4.mp4",body:`<h4>Karakter konsisten</h4><p>Tentukan usia, pakaian, rambut, ekspresi, postur, dan ciri khas.</p>`,prompt:"Seorang wanita usia 30 tahun, rambut hitam sebahu, blazer krem, ekspresi ramah, gaya 3D semi realistis, detail wajah konsisten."},
+  {title:"Menentukan Style / Gaya Gambar",subtitle:"Pilih gaya visual sesuai tujuan konten.",video:"gambar5.mp4",body:`<h4>Pilihan gaya</h4><p>Contohnya realistis, 3D cartoon, watercolor, flat illustration, cinematic, product photography, atau minimalis.</p>`,prompt:"Ubah konsep berikut menjadi gaya 3D cartoon premium, detail bersih, warna harmonis, pencahayaan studio lembut."},
+  {title:"Mengatur Background dan Suasana",subtitle:"Buat latar yang mendukung cerita visual.",video:"gambar6.mp4",body:`<h4>Background</h4><p>Tentukan lokasi, waktu, cuaca, suasana, dan tingkat detail latar.</p>`,prompt:"Karakter utama berdiri di ruang kerja modern, background minimalis, suasana pagi, cahaya matahari masuk dari jendela, depth of field lembut."},
+  {title:"Warna, Cahaya, dan Komposisi",subtitle:"Atur mood visual agar gambar lebih profesional.",video:"gambar7.mp4",body:`<h4>Tiga elemen penting</h4><p>Warna menentukan nuansa, cahaya menentukan fokus, dan komposisi menentukan kenyamanan visual.</p>`,prompt:"Komposisi rule of thirds, warm lighting, warna krem dan emas, kontras lembut, subjek utama tajam, background sedikit blur."},
+  {title:"Membuat Gambar Produk & Konten",subtitle:"Praktik visual untuk promosi dan media sosial.",video:"gambar8.mp4",body:`<h4>Konten komersial</h4><p>Kita belajar membuat mockup produk, visual promosi, poster sederhana, dan gambar pendukung konten.</p>`,prompt:"Foto produk premium di atas meja marmer, pencahayaan studio, background elegan, ruang kosong untuk teks promosi, rasio 4:5."},
+  {title:"Memperbaiki dan Mengedit Gambar AI",subtitle:"Perbaiki detail yang belum sesuai.",video:"gambar9.mp4",body:`<h4>Revisi hasil</h4><p>Periksa anatomi, teks, wajah, warna, dan konsistensi.</p>`,prompt:"Perbaiki gambar ini tanpa mengubah karakter utama. Rapikan tangan, wajah, pencahayaan, dan detail pakaian. Pertahankan gaya visual yang sama."},
+  {title:"Praktik Membuat Gambar AI dari Awal",subtitle:"Gabungkan semua teknik menjadi satu proyek.",video:"gambar10.mp4",body:`<h4>Proyek akhir</h4><p>Buat satu visual lengkap mulai dari ide, prompt, karakter, gaya, background, warna, sampai hasil akhir siap digunakan.</p>`,prompt:"Bantu saya membuat proyek gambar AI dari nol. Tentukan konsep, prompt utama, style, lighting, komposisi, dan tiga variasi prompt revisi."}
+];
+
+let currentGambarLessonIndex=0;
+let gambarCompleted=JSON.parse(localStorage.getItem("kasihgratis_gambar_completed")||"[]");
+
+function openGambarClass(){
+  document.getElementById("gambarClass").style.display="block";
+  renderGambarLessons();
+  updateGambarProgress();
+  document.getElementById("gambarClass").scrollIntoView({behavior:"smooth"});
+}
+function renderGambarLessons(){
+  const list=document.getElementById("gambarLessonList");
+  list.innerHTML=gambarLessons.map((lesson,i)=>`
+    <button class="lesson-item" onclick="openGambarLesson(${i})">
+      <div class="lesson-badge">${i+1}</div>
+      <div class="lesson-info"><strong>${lesson.title}</strong><span>${lesson.subtitle}</span></div>
+      <div class="lesson-check">${gambarCompleted.includes(i)?"✓":"›"}</div>
+    </button>`).join("");
+}
+function openGambarLesson(index){
+  currentGambarLessonIndex=index;
+  const lesson=gambarLessons[index];
+  document.getElementById("gambarLessonNumber").textContent=`Materi ${index+1} dari ${gambarLessons.length}`;
+  document.getElementById("gambarLessonTitle").textContent=lesson.title;
+  document.getElementById("gambarLessonBody").innerHTML=lesson.body;
+  document.getElementById("gambarPromptText").textContent=lesson.prompt;
+  document.getElementById("gambarLessonVideoSource").src=lesson.video;
+  document.getElementById("gambarLessonVideo").load();
+  document.getElementById("gambarLessonDetail").style.display="block";
+  setTimeout(()=>document.getElementById("gambarLessonDetail").scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function closeGambarLesson(){document.getElementById("gambarLessonDetail").style.display="none";document.getElementById("gambarLessonList").scrollIntoView({behavior:"smooth"});}
+function closeGambarClass(){document.getElementById("gambarLessonDetail").style.display="none";document.getElementById("gambarClass").style.display="none";document.getElementById("beranda").scrollIntoView({behavior:"smooth"});}
+function copyGambarPrompt(){
+  const text=document.getElementById("gambarPromptText").textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert("Prompt berhasil disalin."));}
+}
+function markGambarComplete(){
+  if(!gambarCompleted.includes(currentGambarLessonIndex)){
+    gambarCompleted.push(currentGambarLessonIndex);
+    localStorage.setItem("kasihgratis_gambar_completed",JSON.stringify(gambarCompleted));
+  }
+  renderGambarLessons();updateGambarProgress();alert("Materi Gambar AI ditandai selesai.");
+}
+function nextGambarLesson(){if(currentGambarLessonIndex<gambarLessons.length-1)openGambarLesson(currentGambarLessonIndex+1);else alert("Selamat! Anda sudah sampai di materi terakhir kelas Gambar AI.");}
+function updateGambarProgress(){
+  const pct=Math.round((gambarCompleted.length/gambarLessons.length)*100);
+  document.getElementById("gambarCompletedText").textContent=`${gambarCompleted.length}/${gambarLessons.length} selesai`;
+  document.getElementById("gambarProgressBar").style.width=`${pct}%`;
+}
+
 </script>
 </body>
 </html>
