@@ -733,7 +733,6 @@ footer strong{color:#111}
             <button type="button" class="dark-btn" onclick="submitFinalQuiz()">Kirim Jawaban</button>
             <button type="button" class="secondary-light-btn" onclick="resetFinalQuiz()">Ulangi Kuis</button>
             <button type="button" id="certificateBtn" class="secondary-light-btn certificate-btn" onclick="showCertificatePreview()">Ambil Sertifikat</button>
-            <button type="button" class="secondary-light-btn" onclick="backToAnimasiMaterials()">← Kembali ke Materi Animasi AI</button>
           </div>
           <div id="quizResult" class="quiz-result" style="display:none"></div>
         </div>
@@ -1231,16 +1230,6 @@ function showQuizResult(score,correct,passed,scroll){
   if(cert) cert.style.display=passed?"inline-block":"none";
   if(scroll) box.scrollIntoView({behavior:"smooth",block:"center"});
 }
-function backToAnimasiMaterials(){
-  const cls=document.getElementById("animasiClass");
-  if(cls){
-    cls.style.display="block";
-    renderLessons();
-    updateClassProgress();
-    cls.scrollIntoView({behavior:"smooth",block:"start"});
-  }
-}
-
 function resetFinalQuiz(){
   localStorage.removeItem("kasihgratis_animasi_quiz");
   const b=document.getElementById("quizResult"); if(b) b.style.display="none";
@@ -1871,16 +1860,126 @@ document.addEventListener("change",function(e){
 <script>
 
 const gambarLessons = [
-  {title:"Pengenalan Gambar AI",subtitle:"Kenali cara kerja dasar AI dalam membuat gambar.",video:"gambar1.mp4",body:`<h4>Apa yang dipelajari?</h4><p>Gambar AI adalah visual yang dibuat dengan bantuan kecerdasan buatan berdasarkan instruksi atau prompt.</p>`,prompt:"Buatkan gambar seorang guru sedang menjelaskan teknologi AI di kelas modern, gaya ilustrasi 3D, pencahayaan lembut, komposisi rapi."},
-  {title:"Mengenal Tools Pembuat Gambar AI",subtitle:"Pahami fungsi tools sebelum mulai praktik.",video:"gambar2.mp4",body:`<h4>Tools dasar</h4><p>Kita akan mengenal beberapa jenis tools AI gambar dan memahami kapan masing-masing paling cocok digunakan.</p>`,prompt:"Bandingkan alur kerja paling sederhana untuk membuat gambar AI menggunakan satu tools AI gambar dan satu aplikasi desain."},
-  {title:"Dasar-Dasar Prompt Gambar",subtitle:"Belajar menulis prompt yang jelas dan terarah.",video:"gambar3.mp4",body:`<h4>Struktur sederhana</h4><p>Prompt dasar bisa disusun dari subjek, aktivitas, lokasi, gaya, pencahayaan, warna, dan sudut kamera.</p>`,prompt:"[SUBJEK], sedang [AKTIVITAS], di [LOKASI], gaya [STYLE], pencahayaan [LIGHTING], warna [COLOR MOOD], sudut kamera [ANGLE]."},
-  {title:"Menentukan Subjek dan Karakter",subtitle:"Buat karakter yang jelas dan konsisten.",video:"gambar4.mp4",body:`<h4>Karakter konsisten</h4><p>Tentukan usia, pakaian, rambut, ekspresi, postur, dan ciri khas.</p>`,prompt:"Seorang wanita usia 30 tahun, rambut hitam sebahu, blazer krem, ekspresi ramah, gaya 3D semi realistis, detail wajah konsisten."},
-  {title:"Menentukan Style / Gaya Gambar",subtitle:"Pilih gaya visual sesuai tujuan konten.",video:"gambar5.mp4",body:`<h4>Pilihan gaya</h4><p>Contohnya realistis, 3D cartoon, watercolor, flat illustration, cinematic, product photography, atau minimalis.</p>`,prompt:"Ubah konsep berikut menjadi gaya 3D cartoon premium, detail bersih, warna harmonis, pencahayaan studio lembut."},
-  {title:"Mengatur Background dan Suasana",subtitle:"Buat latar yang mendukung cerita visual.",video:"gambar6.mp4",body:`<h4>Background</h4><p>Tentukan lokasi, waktu, cuaca, suasana, dan tingkat detail latar.</p>`,prompt:"Karakter utama berdiri di ruang kerja modern, background minimalis, suasana pagi, cahaya matahari masuk dari jendela, depth of field lembut."},
-  {title:"Warna, Cahaya, dan Komposisi",subtitle:"Atur mood visual agar gambar lebih profesional.",video:"gambar7.mp4",body:`<h4>Tiga elemen penting</h4><p>Warna menentukan nuansa, cahaya menentukan fokus, dan komposisi menentukan kenyamanan visual.</p>`,prompt:"Komposisi rule of thirds, warm lighting, warna krem dan emas, kontras lembut, subjek utama tajam, background sedikit blur."},
-  {title:"Membuat Gambar Produk & Konten",subtitle:"Praktik visual untuk promosi dan media sosial.",video:"gambar8.mp4",body:`<h4>Konten komersial</h4><p>Kita belajar membuat mockup produk, visual promosi, poster sederhana, dan gambar pendukung konten.</p>`,prompt:"Foto produk premium di atas meja marmer, pencahayaan studio, background elegan, ruang kosong untuk teks promosi, rasio 4:5."},
-  {title:"Memperbaiki dan Mengedit Gambar AI",subtitle:"Perbaiki detail yang belum sesuai.",video:"gambar9.mp4",body:`<h4>Revisi hasil</h4><p>Periksa anatomi, teks, wajah, warna, dan konsistensi.</p>`,prompt:"Perbaiki gambar ini tanpa mengubah karakter utama. Rapikan tangan, wajah, pencahayaan, dan detail pakaian. Pertahankan gaya visual yang sama."},
-  {title:"Praktik Membuat Gambar AI dari Awal",subtitle:"Gabungkan semua teknik menjadi satu proyek.",video:"gambar10.mp4",body:`<h4>Proyek akhir</h4><p>Buat satu visual lengkap mulai dari ide, prompt, karakter, gaya, background, warna, sampai hasil akhir siap digunakan.</p>`,prompt:"Bantu saya membuat proyek gambar AI dari nol. Tentukan konsep, prompt utama, style, lighting, komposisi, dan tiga variasi prompt revisi."}
+  {title:"Pengenalan Gambar AI",subtitle:"Kenali apa itu gambar AI, cara kerjanya, dan mulai praktik sederhana.",video:"gambar1.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Setelah menyelesaikan materi ini, peserta memahami apa itu gambar AI, bagaimana AI menghasilkan gambar, dan apa saja yang dapat dibuat menggunakan AI.</p>
+<h4>Apa Itu Gambar AI?</h4>
+<p>Gambar AI adalah gambar yang dibuat atau dikembangkan dengan bantuan Artificial Intelligence (AI). Kita cukup memberikan instruksi berupa teks yang disebut prompt, kemudian AI akan menerjemahkan instruksi tersebut menjadi sebuah gambar.</p>
+<h4>Apa yang Bisa Dibuat?</h4>
+<p>Dengan AI, kita dapat membuat karakter, ilustrasi cerita, gambar realistis, poster, thumbnail, gambar produk, konten media sosial, sampai bahan visual untuk video animasi.</p>
+<h4>Rumus Sederhana</h4>
+<p><strong>IDE → PROMPT → GENERATE → CEK HASIL → PERBAIKI PROMPT</strong></p>
+<p>Tentukan dahulu apa yang ingin dibuat, tuliskan instruksinya, buat gambar dengan AI, periksa hasilnya, lalu perbaiki prompt jika hasil belum sesuai.</p>
+<h4>Latihan</h4>
+<p>Buat 1 gambar AI sederhana dengan menentukan subjek, aktivitas, tempat, dan gaya gambar.</p>
+<ul><li>Subjek: kucing putih</li><li>Aktivitas: membaca buku</li><li>Tempat: perpustakaan</li><li>Gaya: animasi 3D</li></ul>
+<h4>Tugas Materi 1</h4>
+<p>Buat 1 gambar AI berdasarkan ide sendiri. Tidak perlu mengejar hasil sempurna. Fokus utama adalah memahami bahwa hasil gambar sangat dipengaruhi oleh prompt yang kita berikan.</p>`,prompt:"Buat gambar seorang anak laki-laki berusia 10 tahun sedang membaca buku di perpustakaan, memakai kaos kuning dan celana biru, ekspresi ceria, gaya animasi 3D, pencahayaan lembut, detail tinggi."},
+
+  {title:"Mengenal Tools Pembuat Gambar AI",subtitle:"Kenali fungsi tools dan pilih yang paling sesuai untuk pemula.",video:"gambar2.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mengenal fungsi dasar tools pembuat gambar AI dan memahami bahwa setiap tools dapat memiliki kelebihan yang berbeda.</p>
+<h4>Jenis Tools yang Dibutuhkan</h4>
+<p>Secara sederhana, peserta membutuhkan tools untuk membuat gambar AI dan aplikasi pendukung untuk menyimpan, mengatur ukuran, atau menambahkan teks.</p>
+<h4>Cara Memilih Tools</h4>
+<ul><li>Mudah digunakan oleh pemula.</li><li>Mendukung prompt dalam bahasa yang dipahami.</li><li>Memiliki pilihan rasio gambar.</li><li>Hasil gambar mudah disimpan.</li><li>Coba versi gratis terlebih dahulu sebelum berlangganan.</li></ul>
+<h4>Alur Kerja Sederhana</h4>
+<p><strong>TULIS PROMPT → GENERATE → PILIH HASIL → SIMPAN → EDIT JIKA PERLU</strong></p>
+<h4>Latihan</h4>
+<p>Pilih satu tools gambar AI yang tersedia, masukkan prompt sederhana, lalu bandingkan dua hasil gambar yang dihasilkan.</p>
+<h4>Tugas Materi 2</h4>
+<p>Tuliskan nama tools yang digunakan dan satu alasan mengapa tools tersebut terasa mudah atau sulit digunakan.</p>`,prompt:"Buat gambar sebuah meja kerja modern dengan laptop, tanaman kecil, buku catatan, dan secangkir kopi, gaya realistis, pencahayaan pagi yang lembut."},
+
+  {title:"Dasar-Dasar Prompt Gambar",subtitle:"Belajar menyusun prompt yang jelas agar hasil lebih terarah.",video:"gambar3.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu menyusun prompt sederhana menggunakan unsur-unsur penting dalam gambar.</p>
+<h4>Struktur Prompt Dasar</h4>
+<p><strong>SUBJEK + AKTIVITAS + TEMPAT + GAYA + CAHAYA + SUASANA + KOMPOSISI</strong></p>
+<p>Prompt tidak harus panjang, tetapi harus jelas. Semakin spesifik informasi yang diberikan, semakin mudah AI memahami keinginan kita.</p>
+<h4>Contoh</h4>
+<p>Seorang perempuan sedang membaca buku di kafe, gaya ilustrasi digital, cahaya sore hangat, suasana tenang, komposisi medium shot.</p>
+<h4>Latihan</h4>
+<p>Buat tiga prompt dengan subjek yang sama tetapi tempat atau suasananya berbeda.</p>
+<h4>Tugas Materi 3</h4>
+<p>Buat satu prompt lengkap minimal memuat subjek, aktivitas, lokasi, gaya, dan pencahayaan.</p>`,prompt:"Seorang anak perempuan sedang menggambar di meja belajar, kamar yang rapi, gaya ilustrasi 3D lembut, pencahayaan pagi, suasana hangat dan ceria, medium shot."},
+
+  {title:"Menentukan Subjek dan Karakter",subtitle:"Buat subjek atau karakter yang jelas dan mudah dipertahankan.",video:"gambar4.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu mendeskripsikan subjek atau karakter secara rinci agar hasil gambar lebih konsisten.</p>
+<h4>Elemen Karakter</h4>
+<ul><li>Usia atau rentang usia.</li><li>Jenis pakaian dan warna.</li><li>Rambut dan ciri wajah.</li><li>Ekspresi.</li><li>Postur atau aktivitas.</li><li>Ciri khas yang tidak berubah.</li></ul>
+<h4>Mengapa Konsistensi Penting?</h4>
+<p>Jika karakter akan digunakan pada beberapa gambar, deskripsi utama sebaiknya diulang dengan kata-kata yang sama agar identitas visualnya tidak banyak berubah.</p>
+<h4>Latihan</h4>
+<p>Buat satu profil karakter lengkap dalam 5–7 ciri.</p>
+<h4>Tugas Materi 4</h4>
+<p>Generate dua gambar karakter yang sama dalam dua aktivitas berbeda dan periksa apakah wajah, pakaian, dan ciri khasnya masih serupa.</p>`,prompt:"Seorang wanita usia 30 tahun, rambut hitam sebahu, blazer krem, kaus putih, ekspresi ramah, postur percaya diri, gaya 3D semi realistis, detail wajah konsisten."},
+
+  {title:"Menentukan Style / Gaya Gambar",subtitle:"Pilih gaya visual yang sesuai dengan tujuan konten.",video:"gambar5.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mengenal beberapa gaya visual dan mampu memilih gaya yang sesuai dengan kebutuhan.</p>
+<h4>Contoh Gaya Visual</h4>
+<ul><li>Realistis / photorealistic.</li><li>3D cartoon.</li><li>Flat illustration.</li><li>Watercolor.</li><li>Cinematic.</li><li>Minimalis.</li><li>Product photography.</li></ul>
+<h4>Tips Memilih Gaya</h4>
+<p>Gunakan satu gaya utama untuk satu proyek agar tampilan lebih konsisten. Untuk konten edukasi anak, gaya 3D atau ilustrasi sering terasa ringan. Untuk produk, gaya fotografi biasanya lebih cocok.</p>
+<h4>Latihan</h4>
+<p>Gunakan satu prompt yang sama, lalu ubah hanya bagian gaya visualnya menjadi tiga versi berbeda.</p>
+<h4>Tugas Materi 5</h4>
+<p>Pilih satu gaya favorit dan jelaskan singkat mengapa gaya tersebut cocok untuk konten yang ingin dibuat.</p>`,prompt:"Sebuah rumah kecil di tepi danau saat pagi hari, gaya 3D cartoon premium, detail bersih, warna harmonis, pencahayaan lembut, suasana tenang."},
+
+  {title:"Mengatur Background dan Suasana",subtitle:"Buat latar dan mood yang mendukung cerita visual.",video:"gambar6.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu menentukan background, waktu, cuaca, dan suasana agar gambar terasa lebih hidup.</p>
+<h4>Elemen Background</h4>
+<ul><li>Lokasi: rumah, kantor, pantai, pasar, sekolah, dan lain-lain.</li><li>Waktu: pagi, siang, sore, malam.</li><li>Cuaca: cerah, mendung, hujan.</li><li>Detail latar: sederhana atau ramai.</li><li>Suasana: hangat, misterius, ceria, tenang, profesional.</li></ul>
+<h4>Tips</h4>
+<p>Background sebaiknya mendukung subjek, bukan mengalahkan perhatian terhadap subjek utama.</p>
+<h4>Latihan</h4>
+<p>Buat satu karakter yang sama dalam tiga background berbeda.</p>
+<h4>Tugas Materi 6</h4>
+<p>Buat satu gambar dengan background dan suasana yang jelas, lalu tuliskan bagian prompt yang paling memengaruhi mood gambar.</p>`,prompt:"Karakter utama berdiri di ruang kerja modern, background minimalis, suasana pagi, cahaya matahari masuk dari jendela, depth of field lembut, mood profesional dan nyaman."},
+
+  {title:"Warna, Cahaya, dan Komposisi",subtitle:"Atur tampilan agar gambar lebih menarik dan profesional.",video:"gambar7.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta memahami peran warna, pencahayaan, dan komposisi dalam membangun fokus visual.</p>
+<h4>Warna</h4>
+<p>Warna hangat seperti krem, kuning, dan oranye dapat memberi kesan ramah. Warna dingin seperti biru dapat memberi kesan tenang atau profesional.</p>
+<h4>Cahaya</h4>
+<p>Cahaya dapat berasal dari matahari, studio light, soft light, dramatic light, atau backlight.</p>
+<h4>Komposisi</h4>
+<p>Atur posisi subjek dengan istilah seperti close-up, medium shot, wide shot, centered composition, atau rule of thirds.</p>
+<h4>Latihan</h4>
+<p>Buat dua gambar yang sama: satu dengan warm lighting dan satu dengan cool lighting. Bandingkan suasananya.</p>
+<h4>Tugas Materi 7</h4>
+<p>Buat satu prompt yang memuat warna utama, jenis lighting, dan komposisi.</p>`,prompt:"Seorang kreator konten duduk di meja kerja, komposisi rule of thirds, warm lighting, warna krem dan emas, kontras lembut, subjek utama tajam, background sedikit blur."},
+
+  {title:"Membuat Gambar Produk & Konten",subtitle:"Praktik membuat visual untuk promosi dan media sosial.",video:"gambar8.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu membuat visual AI sederhana untuk produk, poster, thumbnail, dan konten media sosial.</p>
+<h4>Gambar Produk</h4>
+<p>Perhatikan posisi produk, background, pencahayaan, dan ruang kosong jika akan ditambahkan teks.</p>
+<h4>Konten Media Sosial</h4>
+<p>Sesuaikan rasio gambar dengan kebutuhan. Contohnya 1:1 untuk kotak, 4:5 untuk feed vertikal, atau 9:16 untuk story dan reels.</p>
+<h4>Tips Prompt Produk</h4>
+<ul><li>Sebut jenis produk dengan jelas.</li><li>Tentukan bahan permukaan atau meja.</li><li>Pilih pencahayaan studio atau natural.</li><li>Minta ruang kosong untuk teks jika diperlukan.</li></ul>
+<h4>Latihan</h4>
+<p>Buat satu visual produk dengan dua background berbeda.</p>
+<h4>Tugas Materi 8</h4>
+<p>Buat satu gambar promosi produk dengan rasio 4:5 dan sisakan area kosong untuk judul atau harga.</p>`,prompt:"Foto produk premium berupa botol minuman di atas meja marmer, pencahayaan studio lembut, background elegan dan bersih, bayangan realistis, ruang kosong di bagian atas untuk teks promosi, rasio 4:5."},
+
+  {title:"Memperbaiki dan Mengedit Gambar AI",subtitle:"Kenali bagian yang perlu direvisi dan perbaiki hasilnya.",video:"gambar9.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu mengevaluasi hasil gambar dan melakukan revisi secara terarah.</p>
+<h4>Apa yang Perlu Dicek?</h4>
+<ul><li>Wajah dan ekspresi.</li><li>Tangan dan jari.</li><li>Bentuk objek.</li><li>Warna dan pencahayaan.</li><li>Background.</li><li>Konsistensi karakter.</li><li>Teks yang muncul pada gambar.</li></ul>
+<h4>Cara Revisi</h4>
+<p>Jangan langsung mengganti seluruh prompt. Pertahankan bagian yang sudah benar, kemudian jelaskan bagian yang ingin diperbaiki.</p>
+<h4>Latihan</h4>
+<p>Pilih satu gambar yang belum sempurna dan tuliskan tiga hal yang ingin diperbaiki.</p>
+<h4>Tugas Materi 9</h4>
+<p>Buat versi revisi dari satu gambar lama dan bandingkan sebelum serta sesudahnya.</p>`,prompt:"Perbaiki gambar ini tanpa mengubah karakter utama. Rapikan tangan dan jari, pertahankan wajah, pakaian, warna, dan komposisi. Perbaiki pencahayaan agar lebih natural dan pertahankan gaya visual yang sama."},
+
+  {title:"Praktik Membuat Gambar AI dari Awal",subtitle:"Gabungkan seluruh materi menjadi satu proyek akhir.",video:"gambar10.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu membuat satu proyek gambar AI lengkap mulai dari ide sampai hasil akhir siap digunakan.</p>
+<h4>Langkah Proyek</h4>
+<ol><li>Tentukan tujuan gambar.</li><li>Pilih subjek atau karakter.</li><li>Tentukan aktivitas dan lokasi.</li><li>Pilih gaya visual.</li><li>Tentukan warna, lighting, dan komposisi.</li><li>Tulis prompt lengkap.</li><li>Generate gambar.</li><li>Cek hasil.</li><li>Perbaiki prompt jika diperlukan.</li><li>Simpan hasil akhir.</li></ol>
+<h4>Proyek Akhir</h4>
+<p>Buat satu visual yang dapat digunakan untuk kebutuhan nyata, misalnya konten edukasi, poster, thumbnail, ilustrasi, atau promosi produk.</p>
+<h4>Checklist Hasil</h4>
+<ul><li>Subjek sudah jelas.</li><li>Gaya visual konsisten.</li><li>Background mendukung.</li><li>Warna dan cahaya sesuai.</li><li>Komposisi nyaman dilihat.</li><li>Tidak ada detail penting yang rusak.</li></ul>
+<h4>Tugas Materi 10</h4>
+<p>Simpan prompt final dan gambar final sebagai portofolio pertama dari kelas Gambar AI.</p>`,prompt:"Bantu saya membuat proyek gambar AI dari nol. Buat konsep lengkap untuk konten edukasi: tentukan subjek, aktivitas, lokasi, gaya visual, warna, lighting, komposisi, prompt utama, serta tiga versi prompt revisi."}
 ];
 
 let currentGambarLessonIndex=0;
