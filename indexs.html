@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KasihGratis AI Learning</title>
+  <style>
+*{box-sizing:border-box}
+:root{
+  --bg:#f6f7f8;
+  --panel:#ffffff;
+  --text:#111214;
+  --muted:#70757d;
+  --line:#e6e8eb;
+  --dark:#080808;
+  --accent:#2f7d57;
+  --soft:#eef5f1;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app-shell{display:flex;min-height:100vh}
+.sidebar{
+  width:250px;
+  position:fixed;
+  left:0;top:0;bottom:0;
+  background:#fbfbfb;
+  border-right:1px solid var(--line);
+  padding:18px 14px;
+  z-index:20;
+  display:flex;
+  flex-direction:column;
+}
+.brand-row{display:flex;gap:10px;align-items:center;padding:6px 8px 18px}
+.brand-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:grid;place-items:center;
+  background:var(--dark);color:#fff;font-weight:800
+}
+.brand-name{font-weight:800;font-size:14px}
+.brand-tag{font-size:11px;color:var(--muted);margin-top:2px}
+.user-pill{
+  display:flex;gap:10px;align-items:center;
+  padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;
+}
+.avatar{width:32px;height:32px;border-radius:50%;background:#efefef;display:grid;place-items:center;font-weight:700}
+.user-pill strong,.user-pill span{display:block}
+.user-pill strong{font-size:13px}.user-pill span{font-size:11px;color:var(--muted);margin-top:2px}
+.nav{display:grid;gap:5px;margin-top:18px}
+.nav-item{
+  text-decoration:none;color:#333;
+  padding:10px 12px;border-radius:10px;
+  font-size:13px;display:flex;gap:10px;align-items:center;
+}
+.nav-item:hover,.nav-item.active{background:#eeeeef;color:#111;font-weight:600}
+.sidebar-bottom{margin-top:auto}
+.ghost-btn{width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;color:#555}
+.main{margin-left:250px;width:calc(100% - 250px);min-height:100vh}
+.topbar{
+  height:64px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;position:sticky;top:0;z-index:10
+}
+.menu-btn{display:none;border:0;background:transparent;font-size:22px}
+.top-title{font-size:14px;font-weight:600}
+.top-actions{display:flex;gap:8px}
+.icon-btn{border:1px solid var(--line);background:#fff;border-radius:9px;width:36px;height:36px}
+.hero{
+  background:#050505;color:white;
+  padding:72px clamp(28px,6vw,90px);
+}
+.hero-kicker{font-size:12px;letter-spacing:.12em;color:#b8bbc0;font-weight:700}
+.hero h1{font-size:clamp(38px,6vw,78px);line-height:1.02;max-width:950px;margin:16px 0 20px;letter-spacing:-.05em}
+.hero p{max-width:720px;color:#bfc1c5;font-size:17px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.primary-btn,.secondary-btn{
+  border-radius:10px;padding:13px 18px;font-weight:700;border:1px solid transparent
+}
+.primary-btn{background:#fff;color:#111}
+.secondary-btn{background:transparent;border-color:#444;color:#fff}
+.content-card,.section{max-width:1020px;margin:0 auto}
+.intro-card{
+  margin-top:44px;background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:30px;display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:center
+}
+.logo-panel{
+  min-height:130px;border-radius:18px;background:linear-gradient(135deg,#0f355c,#1a4c76);
+  color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  box-shadow:inset 0 0 50px rgba(255,255,255,.08)
+}
+.mini-logo{font-size:38px;letter-spacing:.04em;font-weight:700}
+.logo-panel small{opacity:.85}
+.intro-card h2{font-size:28px;margin:0 0 8px}
+.intro-card p{color:var(--muted);margin:0 0 18px}
+.quick-links{display:grid;gap:8px}
+.quick-links button{border:0;background:transparent;text-align:left;color:#555;padding:0}
+.quick-links button:hover{color:#000;text-decoration:underline}
+.section{padding:56px 0}
+.section-title-row{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;margin-bottom:20px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.04em}
+.eyebrow.muted{color:var(--accent)}
+.section h2{margin:8px 0 0;font-size:28px;letter-spacing:-.03em}
+.section-actions{display:flex;gap:8px}
+.featured-card{
+  background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  display:grid;grid-template-columns:1.15fr 1fr
+}
+.featured-media{
+  min-height:250px;background:linear-gradient(135deg,#fff0f0,#f0efff,#effaf5);
+  display:flex;align-items:center;justify-content:center;gap:12px
+}
+.play-badge{width:40px;height:40px;border-radius:10px;background:#7c3aed;color:#fff;display:grid;place-items:center}
+.featured-word{font-size:34px;font-weight:600;color:#35373b}
+.featured-body{padding:28px}
+.tag{font-size:11px;background:#f0f2f4;padding:6px 9px;border-radius:999px;color:#555}
+.featured-body h3{font-size:23px;margin:16px 0 10px}
+.featured-body p{color:var(--muted);line-height:1.6}
+.text-btn{border:0;background:transparent;padding:0;font-weight:700}
+.course-banner{
+  background:#080808;color:#fff;border-radius:14px;padding:34px 28px;margin:16px 0 20px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px
+}
+.course-banner span{font-size:30px;font-weight:800;letter-spacing:-.04em}
+.course-banner small{color:#b9b9b9}
+.search-wrap{display:flex;gap:10px;margin:20px 0 14px}
+.search-wrap input{
+  flex:1;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none
+}
+.search-wrap input:focus{border-color:#a7acb3}
+.search-wrap button{border:0;background:#111;color:white;border-radius:10px;padding:0 20px;font-weight:700}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:12px}
+.chip.active{background:#111;color:#fff;border-color:#111}
+.course-list{display:grid;gap:14px}
+.course-card{
+  background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;
+  display:grid;grid-template-columns:220px 1fr;
+  transition:.2s ease
+}
+.course-card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.thumb{
+  min-height:145px;display:flex;align-items:flex-end;padding:14px;
+  background:linear-gradient(135deg,#dce9d6,#f6deb9,#cee1ed)
+}
+.thumb.alt{background:linear-gradient(135deg,#e9ddff,#f5f0ff,#dceaff)}
+.thumb.dark{background:linear-gradient(135deg,#1e1e1e,#444,#181818);color:#fff}
+.thumb-label{font-size:12px;background:rgba(255,255,255,.9);padding:6px 9px;border-radius:8px}
+.thumb.dark .thumb-label{background:rgba(0,0,0,.5)}
+.course-content{padding:18px 20px}
+.course-meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px}
+.course-content h3{margin:9px 0 7px;font-size:18px}
+.course-content p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.progress-row{margin-top:14px;display:flex;align-items:center;gap:10px}
+.progress{height:6px;flex:1;background:#eee;border-radius:999px;overflow:hidden}
+.progress span{display:block;height:100%;background:#111;border-radius:999px}
+.progress-row small{font-size:11px;color:var(--muted)}
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tool-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px}
+.tool-icon{width:42px;height:42px;border-radius:11px;background:var(--soft);display:grid;place-items:center;margin-bottom:18px}
+.tool-card h3{margin:0 0 8px}.tool-card p{margin:0;color:var(--muted);line-height:1.6;font-size:13px}
+footer{
+  max-width:1020px;margin:0 auto 60px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;color:var(--muted);font-size:12px
+}
+footer strong{color:#111}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:.25s ease}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;width:100%}
+  .menu-btn{display:block}
+  .intro-card{grid-template-columns:1fr;margin-left:18px;margin-right:18px}
+  .section{padding-left:18px;padding-right:18px}
+}
+@media(max-width:700px){
+  .hero{padding:54px 22px}
+  .hero h1{font-size:42px}
+  .featured-card{grid-template-columns:1fr}
+  .course-banner{align-items:flex-start;flex-direction:column}
+  .course-card{grid-template-columns:1fr}
+  .thumb{min-height:170px}
+  .tool-grid{grid-template-columns:1fr}
+  footer{margin-left:18px;margin-right:18px;flex-direction:column;gap:8px}
+}
+
+
+.secondary-light-btn{
+  border:1px solid var(--line);background:#fff;color:#111;border-radius:10px;
+  padding:10px 14px;font-weight:700
+}
+.dark-btn{
+  border:0;background:#111;color:#fff;border-radius:10px;
+  padding:12px 16px;font-weight:700
+}
+.class-intro{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;
+  display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:center;margin-bottom:18px
+}
+.class-intro h3{font-size:22px;margin:12px 0 8px}
+.class-intro p{margin:0;color:var(--muted);line-height:1.65}
+.class-progress-box strong{display:block;margin-bottom:10px}
+.progress.big{height:10px}
+.lesson-list{display:grid;gap:10px}
+.lesson-item{
+  width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;
+  padding:16px;text-align:left;display:flex;gap:14px;align-items:center
+}
+.lesson-item:hover{box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.lesson-badge{
+  width:38px;height:38px;border-radius:10px;background:#111;color:#fff;
+  display:grid;place-items:center;font-weight:800;flex:0 0 auto
+}
+.lesson-info{flex:1}
+.lesson-info strong{display:block;font-size:14px}
+.lesson-info span{display:block;margin-top:4px;font-size:12px;color:var(--muted)}
+.lesson-check{font-size:20px;color:var(--accent)}
+.lesson-detail{
+  margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px
+}
+.lesson-detail-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.lesson-detail h3{margin:12px 0 0;font-size:24px}
+.video-placeholder{
+  margin:20px 0;padding:28px;border-radius:14px;background:#0b0b0b;color:#fff;
+  min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center
+}
+.play-circle{width:54px;height:54px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;margin-bottom:12px}
+.video-placeholder span{color:#b8b8b8;font-size:12px;margin-top:6px}
+.lesson-copy{line-height:1.75;color:#333}
+.lesson-copy h4{margin:18px 0 6px}
+.lesson-copy ul{padding-left:20px}
+.prompt-box{margin-top:18px;border:1px dashed #bfc3c8;border-radius:14px;background:#fafafa;padding:16px}
+.prompt-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.prompt-head button{border:0;background:#111;color:#fff;border-radius:8px;padding:8px 10px;font-size:12px}
+.prompt-box pre{white-space:pre-wrap;font-family:inherit;line-height:1.6;color:#444;margin:14px 0 0}
+.lesson-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+@media(max-width:700px){
+  .class-intro{grid-template-columns:1fr}
+  .lesson-actions button{flex:1}
+}
+
+
+.quiz-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:18px}
+.quiz-question{border-top:1px solid var(--line);padding:18px 0}
+.quiz-question:first-child{border-top:0}
+.quiz-question h4{margin:0 0 12px;font-size:16px;line-height:1.5}
+.quiz-option{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fff}
+.quiz-option input{margin-top:3px}
+.quiz-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.quiz-result{margin-top:18px;padding:18px;border-radius:14px;background:#f7f7f7;border:1px solid var(--line)}
+.quiz-score{font-size:32px;font-weight:800;margin:4px 0}
+.quiz-pass{color:#1b7a46}.quiz-fail{color:#a33}
+.quiz-badge{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800}
+.certificate-btn{display:none}
+
+
+.cert-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;display:none;align-items:center;justify-content:center;padding:18px}
+.cert-panel{width:min(920px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:20px}
+.cert-form{display:grid;grid-template-columns:1fr auto;gap:10px;margin:14px 0 18px}
+.cert-form input{padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.certificate-sheet{background:#fff;border:10px solid #111;padding:48px 38px;text-align:center;position:relative;min-height:560px;display:flex;flex-direction:column;justify-content:center}
+.certificate-sheet:before{content:"";position:absolute;inset:14px;border:2px solid #c9a55d;pointer-events:none}
+.cert-brand{font-size:14px;letter-spacing:.16em;font-weight:800;margin-bottom:18px}
+.cert-title{font-size:40px;font-weight:800;letter-spacing:.03em;margin:0 0 14px}
+.cert-sub{font-size:15px;color:#666}
+.cert-name{font-size:34px;font-weight:800;margin:20px 0 10px}
+.cert-course{font-size:24px;font-weight:700;margin:10px 0}
+.cert-meta{margin-top:24px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;color:#444}
+.cert-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+@media(max-width:700px){.cert-form{grid-template-columns:1fr}.certificate-sheet{padding:34px 18px;min-height:500px}.cert-title{font-size:30px}.cert-name{font-size:28px}.cert-course{font-size:20px}}
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{
+    width:210mm!important;
+    height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  body>*{display:none!important}
+  #certModal{
+    display:block!important;
+    position:fixed!important;
+    inset:0!important;
+    width:210mm!important;
+    height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+    overflow:hidden!important;
+  }
+  #certModal .cert-panel{
+    display:block!important;
+    width:210mm!important;
+    height:297mm!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:10mm!important;
+    box-sizing:border-box!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  #certModal .cert-panel>div:not(#certificateSheet){display:none!important}
+  #certificateSheet{
+    display:flex!important;
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    width:190mm!important;
+    height:277mm!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:18mm 12mm!important;
+    box-sizing:border-box!important;
+    border:3mm solid #111!important;
+    overflow:hidden!important;
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+  #certificateSheet:before{inset:7mm!important}
+}
+
+
+.dashboard-wrap{max-width:1020px;margin:34px auto 0;padding:0}
+.dashboard-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.dashboard-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.dashboard-name{font-size:28px;font-weight:800;margin:6px 0 4px}
+.dashboard-sub{color:var(--muted);font-size:13px}
+.dashboard-edit{display:flex;gap:8px;flex-wrap:wrap}
+.dashboard-edit input{border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:220px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.stat-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fafafa}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-value{font-size:28px;font-weight:800;margin-top:6px}
+.stat-note{font-size:11px;color:var(--muted);margin-top:4px}
+.dashboard-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.dashboard-progress{margin-top:18px}
+.dashboard-progress-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:8px}
+.dashboard-progress-track{height:10px;border-radius:999px;background:#eee;overflow:hidden}
+.dashboard-progress-track span{display:block;height:100%;background:#111;border-radius:999px}
+.status-pill{display:inline-block;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800}
+.status-pass{background:#e8f7ee;color:#1b7a46}
+.status-wait{background:#fff5df;color:#8b6400}
+@media(max-width:900px){.dashboard-wrap{padding:0 18px}}
+@media(max-width:700px){.dashboard-grid{grid-template-columns:1fr}.dashboard-edit{width:100%}.dashboard-edit input{flex:1;min-width:0}}
+
+
+.login-overlay{
+  position:fixed;inset:0;z-index:12000;background:linear-gradient(135deg,#f7f7f7,#eceff4);
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.login-box{
+  width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;
+  padding:26px;box-shadow:0 18px 50px rgba(0,0,0,.12)
+}
+.login-logo{
+  width:56px;height:56px;border-radius:16px;background:#111;color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:22px;margin-bottom:18px
+}
+.login-box h2{margin:0 0 8px;font-size:28px}
+.login-box p{margin:0 0 20px;color:var(--muted);line-height:1.6;font-size:13px}
+.login-field{display:grid;gap:6px;margin-top:12px}
+.login-field label{font-size:12px;font-weight:700}
+.login-field input{
+  padding:12px 14px;border:1px solid var(--line);border-radius:11px;outline:none
+}
+.login-field input:focus{border-color:#999}
+.login-btn{
+  width:100%;margin-top:18px;border:0;background:#111;color:#fff;border-radius:11px;
+  padding:13px 16px;font-weight:800
+}
+.login-small{margin-top:12px;font-size:11px;color:var(--muted);text-align:center}
+.profile-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px
+}
+.profile-pill{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;
+  padding:7px 10px;background:#fff;font-size:12px
+}
+.profile-avatar{
+  width:24px;height:24px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:800
+}
+.logout-btn{
+  border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:700
+}
+
+
+.admin-entry-btn{
+  border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;
+  font-size:12px;font-weight:800
+}
+.admin-modal{
+  position:fixed;inset:0;z-index:15000;background:rgba(0,0,0,.72);
+  display:none;align-items:center;justify-content:center;padding:18px
+}
+.admin-box{
+  width:min(460px,100%);background:#fff;border-radius:18px;padding:22px;
+  border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.18)
+}
+.admin-box h3{margin:0 0 6px;font-size:24px}
+.admin-box p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.6}
+.admin-field{display:grid;gap:6px;margin-top:12px}
+.admin-field label{font-size:12px;font-weight:800}
+.admin-field input{
+  padding:12px 14px;border:1px solid var(--line);border-radius:10px;outline:none
+}
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.admin-panel{
+  position:fixed;inset:0;z-index:14900;background:#f5f6f7;display:none;overflow:auto
+}
+.admin-panel-inner{max-width:1000px;margin:0 auto;padding:24px 18px 60px}
+.admin-panel-head{
+  display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;
+  margin-bottom:20px
+}
+.admin-material-list{display:grid;gap:12px}
+.admin-material{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;
+  display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center
+}
+.admin-num{
+  width:42px;height:42px;border-radius:11px;background:#111;color:#fff;
+  display:grid;place-items:center;font-weight:800
+}
+.admin-material strong{display:block;font-size:14px}
+.admin-material small{display:block;color:var(--muted);margin-top:4px}
+.admin-material button{
+  border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:800
+}
+.admin-note{
+  margin-top:18px;padding:14px;border:1px solid #edd59b;background:#fff7e5;border-radius:12px;
+  font-size:12px;line-height:1.6;color:#6e5418
+}
+@media(max-width:700px){
+  .admin-material{grid-template-columns:42px 1fr}
+  .admin-material button{grid-column:1/-1;width:100%}
+}
+
+
+.admin-video-wrap{grid-column:1/-1;margin-top:8px}
+.admin-video-wrap video{width:100%;max-height:260px;background:#000;border-radius:12px;display:block}
+.admin-video-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.admin-video-actions{display:flex;gap:8px;flex-wrap:wrap}
+.admin-status{font-size:12px;color:var(--muted)}
+
+
+.admin-latest-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#e8f7ee;color:#1b7a46;font-size:11px;font-weight:800;margin-top:7px}
+.admin-current-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#f1f2f4;color:#555;font-size:11px;font-weight:800;margin-top:7px}
+.admin-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}
+@media(max-width:700px){.admin-summary-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">KG</div>
+    <h2>KasihGratis AI Learning</h2>
+    <p>Masuk dengan nama peserta. Progres belajar, nilai kuis, dan status sertifikat akan disimpan untuk profil ini di perangkat yang sama.</p>
+
+    <div class="login-field">
+      <label>Nama lengkap peserta</label>
+      <input id="loginName" type="text" placeholder="Contoh: Budi Santoso">
+    </div>
+
+    <div class="login-field">
+      <label>PIN 4 digit</label>
+      <input id="loginPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+    </div>
+
+    <button class="login-btn" onclick="loginParticipant()">Masuk / Buat Profil</button>
+    <div id="loginStatus" class="login-small"></div>
+    <div class="login-small">Catatan: ini login lokal untuk penggunaan di perangkat ini, bukan akun internet.</div>
+  </div>
+</div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-icon">B</div>
+        <div>
+          <div class="brand-name">KasihGratis AI Learning</div>
+          <div class="brand-tag">Workspace</div>
+        </div>
+      </div>
+
+      <div class="user-pill">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Admin</strong>
+          <span>Peserta</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item active" href="#beranda"><span>⌂</span> Beranda</a>
+        <a class="nav-item" href="#kelas"><span>▣</span> Kelas Saya</a>
+        <a class="nav-item" href="#materi"><span>▤</span> Materi</a>
+        <a class="nav-item" href="#favorit"><span>★</span> Favorit</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="ghost-btn">⚙ Pengaturan</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="top-title">Halaman Belajar</div>
+        <div class="top-actions">
+          <button class="admin-entry-btn" onclick="openAdminLogin()">Admin</button>
+          <button class="icon-btn">☆</button>
+          <button class="icon-btn">•••</button>
+        </div>
+      </header>
+
+      <section class="hero" id="beranda">
+        <div class="hero-kicker">PLATFORM PEMBELAJARAN DIGITAL</div>
+        <h1>Belajar lebih praktis, terarah, dan menyenangkan.</h1>
+        <p>Akses materi, video, prompt AI, latihan, dan catatan dalam satu halaman pembelajaran.</p>
+        <div class="hero-actions">
+          <button class="primary-btn" onclick="scrollToCourses()">Mulai Belajar</button>
+          <button class="secondary-btn" onclick="openSearch()">Cari Materi</button>
+        </div>
+      </section>
+
+      
+      <section class="dashboard-wrap" id="dashboardPeserta">
+        <div class="dashboard-card">
+          <div class="dashboard-top">
+            <div>
+              <div class="eyebrow muted">👤 DASHBOARD PESERTA</div>
+              <div id="dashboardName" class="dashboard-name">Peserta KasihGratis</div>
+              <div class="dashboard-sub">Pantau progres belajar, nilai kuis, dan status sertifikat.</div>
+            <div class="profile-bar">
+              <div class="profile-pill">
+                <div class="profile-avatar" id="profileInitial">P</div>
+                <span id="profileActiveName">Peserta</span>
+              </div>
+              <button class="logout-btn" onclick="logoutParticipant()">Ganti Peserta</button>
+            </div>
+
+            </div>
+            <div class="dashboard-edit">
+              <input id="dashboardNameInput" type="text" placeholder="Nama lengkap peserta">
+              <button class="secondary-light-btn" onclick="saveDashboardName()">Simpan Nama</button>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="stat-card">
+              <div class="stat-label">Materi Selesai</div>
+              <div id="dashMaterialCount" class="stat-value">0/10</div>
+              <div id="dashMaterialNote" class="stat-note">Belum ada materi selesai</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Nilai Kuis</div>
+              <div id="dashQuizScore" class="stat-value">—</div>
+              <div id="dashQuizNote" class="stat-note">Belum mengerjakan kuis</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Sertifikat</div>
+              <div id="dashCertStatus" class="stat-value" style="font-size:20px">Belum tersedia</div>
+              <div id="dashCertNote" class="stat-note">Lulus kuis untuk membuka sertifikat</div>
+            </div>
+          </div>
+
+          <div class="dashboard-progress">
+            <div class="dashboard-progress-row">
+              <span>Progres Kelas Animasi AI</span>
+              <strong id="dashProgressText">0%</strong>
+            </div>
+            <div class="dashboard-progress-track">
+              <span id="dashProgressBar" style="width:0%"></span>
+            </div>
+          </div>
+
+          <div class="dashboard-actions">
+            <button class="dark-btn" onclick="continueLearning()">▶ Lanjutkan Belajar</button>
+            <button class="secondary-light-btn" onclick="goToFinalQuiz()">📝 Buka Kuis Akhir</button>
+            <button id="dashCertificateBtn" class="secondary-light-btn" style="display:none" onclick="showCertificatePreview()">🎓 Ambil Sertifikat</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-card intro-card">
+        <div class="logo-panel">
+          <div class="mini-logo">KasihGratis</div>
+          <small>AI Learning</small>
+        </div>
+        <div>
+          <h2>Yuk, mau belajar apa?</h2>
+          <p>Pilih jalur belajar di bawah atau cari topik yang kamu butuhkan.</p>
+          <div class="quick-links">
+            <button onclick="openLearningPath('animasi')">1. Belajar Bikin Animasi AI</button>
+            <button onclick="openGambarClass()">2. Belajar Bikin Gambar AI</button>
+            <button onclick="filterCategory('Video AI')">3. Belajar Bikin Video AI</button>
+            <button onclick="filterCategory('Prompt AI')">4. Belajar Prompt AI</button>
+            <button onclick="filterCategory('ChatGPT')">5. Belajar ChatGPT</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow">🔥 WAJIB DIPELAJARI TERLEBIH DULU</span>
+            <h2>Dasar sebelum mulai</h2>
+          </div>
+          <div class="section-actions">
+            <button class="icon-btn">⇅</button>
+            <button class="icon-btn" onclick="openSearch()">⌕</button>
+          </div>
+        </div>
+
+        <article class="featured-card">
+          <div class="featured-media">
+            <div class="play-badge">▶</div>
+            <div class="featured-word">Google Vids</div>
+          </div>
+          <div class="featured-body">
+            <span class="tag">Materi Dasar</span>
+            <h3>Flow, Gemini, dan Google Vids</h3>
+            <p>Kenali alur kerja dasar agar pembuatan video AI lebih mudah dan konsisten.</p>
+            <button class="text-btn" onclick="alert('Demo: materi dasar dibuka')">Buka Materi →</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="kelas">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow muted">🎓 KELAS PILIHAN</span>
+            <h2>Belajar Bikin Animasi AI</h2>
+          </div>
+        </div>
+
+        <div class="course-banner">
+          <span>Belajar Video Animasi</span>
+          <small>Dari dasar sampai siap publish</small>
+        </div>
+
+        <div class="search-wrap" id="searchWrap">
+          <input id="searchInput" type="text" placeholder="Cari materi, contoh: animasi, prompt, video..." />
+          <button onclick="doSearch()">Cari</button>
+        </div>
+
+        <div class="filter-row">
+          <button class="chip active" data-filter="Semua" onclick="filterCategory('Semua')">Semua</button>
+          <button class="chip" data-filter="Animasi AI" onclick="filterCategory('Animasi AI')">Animasi AI</button>
+          <button class="chip" data-filter="Gambar AI" onclick="filterCategory('Gambar AI')">Gambar AI</button>
+          <button class="chip" data-filter="Video AI" onclick="filterCategory('Video AI')">Video AI</button>
+          <button class="chip" data-filter="Prompt AI" onclick="filterCategory('Prompt AI')">Prompt AI</button>
+          <button class="chip" data-filter="ChatGPT" onclick="filterCategory('ChatGPT')">ChatGPT</button>
+        </div>
+
+        <div class="course-list" id="courseList"></div>
+      </section>
+
+      
+      <section class="section" id="animasiClass" style="display:none">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow muted">🎬 KELAS INTERAKTIF</span>
+            <h2>Belajar Bikin Animasi AI</h2>
+          </div>
+          <button class="secondary-light-btn" onclick="closeLearningPath()">Kembali</button>
+        </div>
+
+        <div class="class-intro">
+          <div class="class-intro-text">
+            <span class="tag">Pemula</span>
+            <h3>Dari nol sampai punya animasi AI pertama</h3>
+            <p>Ikuti materi secara berurutan. Tekan salah satu modul untuk membuka penjelasan, latihan, contoh prompt, dan tombol materi berikutnya.</p>
+          </div>
+          <div class="class-progress-box">
+            <strong id="completedText">0/10 selesai</strong>
+            <div class="progress big"><span id="classProgressBar" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="lesson-list" id="lessonList"></div>
+
+        <div class="lesson-detail" id="lessonDetail" style="display:none">
+          <div class="lesson-detail-top">
+            <div>
+              <span class="tag" id="lessonNumber">Materi 1</span>
+              <h3 id="lessonTitle">Judul Materi</h3>
+            </div>
+            <button class="icon-btn" onclick="closeLesson()">×</button>
+          </div>
+
+          <div style="margin:20px 0 10px;font-weight:800">Video Pembelajaran</div>
+          <video id="lessonVideo" controls playsinline preload="metadata" onerror="document.getElementById('videoMissingMsg').style.display='block'" onloadeddata="document.getElementById('videoMissingMsg').style.display='none'" style="width:100%;max-height:70vh;background:#000;border-radius:14px;display:block">
+            <source id="lessonVideoSource" src="materi1-baru.mp4" type="video/mp4">
+            Browser Anda tidak mendukung pemutar video.
+          </video>
+
+          
+<div class="lesson-copy" id="lessonBody"></div>
+
+          <div class="prompt-box" id="promptBox">
+            <div class="prompt-head">
+              <strong>Contoh Prompt</strong>
+              <button onclick="copyPrompt()">Salin Prompt</button>
+            </div>
+            <pre id="promptText"></pre>
+          </div>
+
+          <div class="lesson-actions">
+            <button class="secondary-light-btn" onclick="markComplete()">✓ Tandai Selesai</button>
+            <button class="dark-btn" onclick="nextLesson()">Materi Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+
+
+        <div class="quiz-card" id="finalQuiz">
+          <span class="quiz-badge">🎓 UJIAN AKHIR</span>
+          <h3 style="margin:10px 0 6px">Kuis Akhir — Animasi AI</h3>
+          
+          <form id="quizForm"></form>
+          <div class="quiz-actions">
+            <button type="button" class="dark-btn" onclick="submitFinalQuiz()">Kirim Jawaban</button>
+            <button type="button" class="secondary-light-btn" onclick="resetFinalQuiz()">Ulangi Kuis</button>
+            <button type="button" id="certificateBtn" class="secondary-light-btn certificate-btn" onclick="showCertificatePreview()">Ambil Sertifikat</button>
+          </div>
+          <div id="quizResult" class="quiz-result" style="display:none"></div>
+        </div>
+
+
+      <section class="section" id="gambarClass" style="display:none">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow muted">🎨 KELAS INTERAKTIF</span>
+            <h2>Belajar Bikin Gambar AI</h2>
+          </div>
+          <button class="secondary-light-btn" onclick="closeGambarClass()">Kembali</button>
+        </div>
+
+        <div class="class-intro">
+          <div class="class-intro-text">
+            <span class="tag">Pemula</span>
+            <h3>Dari prompt sederhana sampai gambar AI siap dipakai</h3>
+            <p>Ikuti 10 materi secara berurutan. Setiap materi dapat diisi video, penjelasan, latihan, dan contoh prompt.</p>
+          </div>
+          <div class="class-progress-box">
+            <strong id="gambarCompletedText">0/10 selesai</strong>
+            <div class="progress big"><span id="gambarProgressBar" style="width:0%"></span></div>
+          </div>
+        </div>
+
+        <div class="lesson-list" id="gambarLessonList"></div>
+
+        <div class="lesson-detail" id="gambarLessonDetail" style="display:none">
+          <div class="lesson-detail-top">
+            <div>
+              <span class="tag" id="gambarLessonNumber">Materi 1</span>
+              <h3 id="gambarLessonTitle">Judul Materi</h3>
+            </div>
+            <button class="icon-btn" onclick="closeGambarLesson()">×</button>
+          </div>
+
+          <div style="margin:20px 0 10px;font-weight:800">Video Pembelajaran</div>
+          <video id="gambarLessonVideo" controls playsinline preload="metadata"
+            style="width:100%;max-height:70vh;background:#000;border-radius:14px;display:block">
+            <source id="gambarLessonVideoSource" src="" type="video/mp4">
+            Browser Anda tidak mendukung pemutar video.
+          </video>
+
+          <div class="lesson-copy" id="gambarLessonBody"></div>
+
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <strong>Contoh Prompt</strong>
+              <button onclick="copyGambarPrompt()">Salin Prompt</button>
+            </div>
+            <pre id="gambarPromptText"></pre>
+          </div>
+
+          <div class="lesson-actions">
+            <button class="secondary-light-btn" onclick="markGambarComplete()">✓ Tandai Selesai</button>
+            <button class="dark-btn" onclick="nextGambarLesson()">Materi Selanjutnya →</button>
+          </div>
+        </div>
+      </section>
+
+<section class="section" id="materi">
+        <div class="section-title-row">
+          <div>
+            <span class="eyebrow muted">📚 MATERI TAMBAHAN</span>
+            <h2>Toolkit belajar cepat</h2>
+          </div>
+        </div>
+
+        <div class="tool-grid">
+          <div class="tool-card">
+            <div class="tool-icon">✦</div>
+            <h3>Prompt Library</h3>
+            <p>Kumpulan prompt siap pakai untuk ide konten, skrip, visual, dan video.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">✓</div>
+            <h3>Checklist Proyek</h3>
+            <p>Panduan langkah demi langkah agar proses produksi lebih rapi.</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">▰</div>
+            <h3>Template Konten</h3>
+            <p>Struktur konten pembelajaran yang bisa langsung kamu adaptasi.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <strong>KasihGratis AI Learning</strong>
+        <span>KasihGratis AI Learning • 2026</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+const courses = [
+  {
+    title: "Dasar Membuat Animasi dengan AI",
+    category: "Animasi AI",
+    desc: "Belajar membuat karakter, gerakan sederhana, narasi, dan alur animasi dengan bantuan AI.",
+    progress: 20,
+    thumb: "Animasi AI",
+    cls: ""
+  },
+  {
+    title: "Membuat Gambar Keren dengan AI",
+    category: "Gambar AI",
+    desc: "Belajar menulis prompt gambar, memilih gaya visual, dan menghasilkan ilustrasi yang menarik.",
+    progress: 10,
+    thumb: "Gambar AI",
+    cls: "alt"
+  },
+  {
+    title: "Membuat Video AI dari Nol",
+    category: "Video AI",
+    desc: "Belajar membuat video dari ide, skrip, visual, voice-over, sampai siap dipublikasikan.",
+    progress: 15,
+    thumb: "Video AI",
+    cls: "dark"
+  },
+  {
+    title: "Belajar Prompt AI",
+    category: "Prompt AI",
+    desc: "Pahami cara menulis prompt yang jelas agar hasil AI lebih sesuai dengan kebutuhan.",
+    progress: 35,
+    thumb: "Prompt AI",
+    cls: "alt"
+  },
+  {
+    title: "Belajar ChatGPT untuk Pemula",
+    category: "ChatGPT",
+    desc: "Pelajari cara memakai ChatGPT untuk belajar, menulis, mencari ide, dan membantu pekerjaan sehari-hari.",
+    progress: 25,
+    thumb: "ChatGPT",
+    cls: ""
+  }
+];
+
+function renderCourses(list){
+  const el = document.getElementById('courseList');
+  if(!list.length){
+    el.innerHTML = '<div style="padding:28px;background:#fff;border:1px solid #e6e8eb;border-radius:14px;color:#70757d">Materi tidak ditemukan.</div>';
+    return;
+  }
+  el.innerHTML = list.map((c,i)=>`
+    <article class="course-card">
+      <div class="thumb ${c.cls}">
+        <span class="thumb-label">${i+1}. ${c.thumb}</span>
+      </div>
+      <div class="course-content">
+        <div class="course-meta">
+          <span>${c.category}</span><span>•</span><span>Video + Materi</span>
+        </div>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <div class="progress-row">
+          <div class="progress"><span style="width:${c.progress}%"></span></div>
+          <small>${c.progress}%</small>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+function filterCategory(category){
+  document.querySelectorAll('.chip').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.filter === category);
+  });
+  const filtered = category === 'Semua' ? courses : courses.filter(c=>c.category===category);
+  renderCourses(filtered);
+  document.getElementById('kelas').scrollIntoView({behavior:'smooth'});
+}
+
+function doSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const filtered = courses.filter(c =>
+    c.title.toLowerCase().includes(q) ||
+    c.desc.toLowerCase().includes(q) ||
+    c.category.toLowerCase().includes(q)
+  );
+  renderCourses(filtered);
+}
+
+function openSearch(){
+  document.getElementById('kelas').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>document.getElementById('searchInput').focus(),400);
+}
+
+function scrollToCourses(){
+  document.getElementById('kelas').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('menuBtn').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+document.getElementById('searchInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter') doSearch();
+});
+
+renderCourses(courses);
+
+
+const animationLessons = [
+  {
+    title:"Pengenalan Animasi AI",
+    video:"materi1-baru.mp4",
+    subtitle:"Kenali alur kerja dan hasil yang bisa dibuat.",
+    body:`<h4>Apa yang dipelajari?</h4>
+      <p>Animasi AI adalah proses membuat visual bergerak dengan bantuan alat AI. Untuk pemula, alurnya cukup sederhana: tentukan ide, buat karakter atau gambar, gerakkan gambar, tambahkan suara, lalu edit.</p>
+      <h4>Latihan</h4>
+      <ul><li>Tentukan satu tema animasi.</li><li>Pilih durasi pendek, misalnya 15–30 detik.</li><li>Tuliskan siapa tokoh utamanya.</li></ul>`,
+    prompt:"Buatkan 5 ide animasi AI berdurasi 30 detik untuk pemula dengan tema edukasi yang sederhana dan menarik."
+  },
+  {
+    title:"Tools yang Dibutuhkan",
+    video:"materi2.mp4",
+    subtitle:"Pilih alat sesuai fungsi, tidak perlu banyak aplikasi.",
+    body:`<h4>Tools dasar</h4>
+      <p>Anda cukup membutuhkan 4 jenis alat: AI untuk ide dan skrip, AI gambar, AI video, dan editor video. Tidak harus memakai banyak aplikasi sekaligus.</p>
+      <h4>Tips</h4><ul><li>Mulai dari tools yang paling mudah.</li><li>Gunakan versi gratis dulu untuk belajar.</li><li>Simpan hasil gambar dan video dalam satu folder.</li></ul>`,
+    prompt:"Buatkan daftar workflow animasi AI paling sederhana untuk pemula menggunakan 1 tool AI teks, 1 tool gambar, 1 tool video, dan 1 editor."
+  },
+  {
+    title:"Membuat Ide & Cerita",
+    video:"Materi3.mp4",
+    subtitle:"Susun cerita pendek yang mudah divisualisasikan.",
+    body:`<h4>Rumus cerita sederhana</h4><p>Gunakan pola: pembuka → masalah → aksi → hasil. Untuk video pendek, satu cerita sebaiknya fokus pada satu pesan.</p>
+      <h4>Latihan</h4><p>Buat cerita 4 adegan dengan masing-masing adegan hanya 1 kalimat.</p>`,
+    prompt:"Buat cerita animasi 4 adegan tentang seorang anak yang belajar menjaga kebersihan, gaya hangat, sederhana, dan cocok untuk video 30 detik."
+  },
+  {
+    title:"Membuat Karakter AI",
+    video:"Materi4.mp4",
+    subtitle:"Buat karakter yang konsisten dari awal sampai akhir.",
+    body:`<h4>Kunci karakter konsisten</h4><p>Tentukan umur, pakaian, warna rambut, gaya visual, ekspresi dasar, dan ciri khas. Gunakan deskripsi yang sama di setiap prompt.</p>`,
+    prompt:"Karakter anak laki-laki usia 10 tahun, rambut hitam pendek, kaos kuning, celana biru, sepatu putih, ekspresi ceria, gaya animasi 3D lembut, pencahayaan sinematik."
+  },
+  {
+    title:"Membuat Prompt",
+    video:"Materi5.mp4",
+    subtitle:"Tulis prompt visual yang jelas dan terstruktur.",
+    body:`<h4>Struktur prompt</h4><p>Susun prompt dengan urutan: subjek + aksi + tempat + gaya + kamera + pencahayaan + suasana.</p>
+      <h4>Contoh</h4><p>Semakin spesifik deskripsi, semakin mudah menjaga hasil tetap konsisten.</p>`,
+    prompt:"[SUBJEK], sedang [AKSI], di [TEMPAT], gaya [GAYA VISUAL], sudut kamera [KAMERA], pencahayaan [CAHAYA], suasana [MOOD]."
+  },
+  {
+    title:"Membuat Gambar",
+    video:"Materi6.mp4",
+    subtitle:"Ubah prompt menjadi visual tiap adegan.",
+    body:`<h4>Langkah</h4><ul><li>Buat satu gambar untuk setiap adegan.</li><li>Gunakan rasio yang sama.</li><li>Periksa wajah, pakaian, dan warna karakter.</li><li>Ulangi prompt bila karakter berubah terlalu jauh.</li></ul>`,
+    prompt:"Buat storyboard 4 gambar berdasarkan cerita berikut. Pertahankan karakter, pakaian, warna, dan gaya visual yang sama pada semua adegan."
+  },
+  {
+    title:"Mengubah Gambar Menjadi Video",
+    video:"Materi7.mp4",
+    subtitle:"Tambahkan gerakan kamera dan gerakan karakter.",
+    body:`<h4>Gerakan yang aman untuk pemula</h4><p>Gunakan gerakan sederhana seperti berjalan, menoleh, tersenyum, zoom in, atau kamera bergerak perlahan. Hindari terlalu banyak gerakan dalam satu klip.</p>`,
+    prompt:"Gerakkan karakter secara natural: berjalan perlahan ke depan, tersenyum, sedikit menoleh ke kamera. Kamera melakukan slow push-in. Gerakan halus, tanpa distorsi."
+  },
+  {
+    title:"Membuat Suara / Narasi",
+    video:"Materi8.mp4",
+    subtitle:"Tambahkan voice-over agar cerita lebih hidup.",
+    body:`<h4>Narasi efektif</h4><p>Gunakan kalimat pendek, mudah dipahami, dan sesuai durasi visual. Bacakan dengan tempo yang tenang.</p>
+      <h4>Tips</h4><p>Untuk video 30 detik, narasi sebaiknya ringkas dan langsung ke inti.</p>`,
+    prompt:"Buatkan voice-over bahasa Indonesia untuk video animasi 30 detik, nada ramah dan edukatif, maksimal 65 kata."
+  },
+  {
+    title:"Editing Video",
+    video:"Materi9.mp4",
+    subtitle:"Gabungkan klip, suara, teks, dan musik.",
+    body:`<h4>Urutan editing</h4><ul><li>Susun klip sesuai cerita.</li><li>Masukkan narasi.</li><li>Tambahkan teks singkat.</li><li>Tambahkan musik lembut.</li><li>Cek volume dan durasi.</li></ul>`,
+    prompt:"Buatkan checklist editing video animasi AI 30 detik untuk pemula sebelum dipublikasikan."
+  },
+  {
+    title:"Praktik Animasi Pertama",
+    video:"Materi10.mp4",
+    subtitle:"Satukan seluruh langkah menjadi satu proyek.",
+    body:`<h4>Tugas akhir mini</h4><p>Buat satu animasi 30–60 detik dengan 4 adegan. Gunakan satu karakter utama, satu pesan, satu gaya visual, dan satu narasi.</p>
+      <h4>Target</h4><p>Yang terpenting pada proyek pertama adalah selesai. Setelah itu baru perbaiki kualitas visual dan gerak.</p>`,
+    prompt:"Bantu saya membuat proyek animasi AI pertama. Buatkan ide, cerita 4 adegan, prompt gambar tiap adegan, prompt gerakan video, dan naskah voice-over."
+  }
+];
+
+let currentLessonIndex = 0;
+let completedLessons = JSON.parse(localStorage.getItem('kasihgratis_animasi_completed') || '[]');
+
+function openLearningPath(path){
+  if(path !== 'animasi') return;
+  document.getElementById('animasiClass').style.display = 'block';
+  renderLessons();
+  updateClassProgress();
+  document.getElementById('animasiClass').scrollIntoView({behavior:'smooth'});
+}
+
+function closeLearningPath(){
+  document.getElementById('lessonDetail').style.display = 'none';
+  document.getElementById('animasiClass').style.display = 'none';
+  document.getElementById('beranda').scrollIntoView({behavior:'smooth'});
+}
+
+function renderLessons(){
+  const list = document.getElementById('lessonList');
+  list.innerHTML = animationLessons.map((lesson,i)=>`
+    <button class="lesson-item" onclick="openLesson(${i})">
+      <div class="lesson-badge">${i+1}</div>
+      <div class="lesson-info">
+        <strong>${lesson.title}</strong>
+        <span>${lesson.subtitle}</span>
+      </div>
+      <div class="lesson-check">${completedLessons.includes(i) ? '✓' : '›'}</div>
+    </button>
+  `).join('');
+}
+
+function openLesson(index){
+  currentLessonIndex = index;
+  const lesson = animationLessons[index];
+  document.getElementById('lessonNumber').textContent = `Materi ${index+1} dari ${animationLessons.length}`;
+  document.getElementById('lessonTitle').textContent = lesson.title;
+  const lessonVideo = document.getElementById('lessonVideo');
+  const lessonVideoSource = document.getElementById('lessonVideoSource');
+  lessonVideoSource.src = lesson.video;
+  lessonVideo.load();
+  document.getElementById('lessonBody').innerHTML = lesson.body;
+  document.getElementById('promptText').textContent = lesson.prompt;
+  document.getElementById('lessonDetail').style.display = 'block';
+  setTimeout(()=>document.getElementById('lessonDetail').scrollIntoView({behavior:'smooth', block:'start'}),50);
+}
+
+function closeLesson(){
+  document.getElementById('lessonDetail').style.display = 'none';
+  document.getElementById('lessonList').scrollIntoView({behavior:'smooth'});
+}
+
+function copyPrompt(){
+  const text = document.getElementById('promptText').textContent;
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=>alert('Prompt berhasil disalin.'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    alert('Prompt berhasil disalin.');
+  }
+}
+
+function markComplete(){
+  if(!completedLessons.includes(currentLessonIndex)){
+    completedLessons.push(currentLessonIndex);
+    localStorage.setItem('kasihgratis_animasi_completed', JSON.stringify(completedLessons));
+  }
+  renderLessons();
+  updateClassProgress();
+  if(typeof refreshParticipantDashboard==='function') refreshParticipantDashboard();
+  if(typeof kgSaveActiveProfileData==='function') kgSaveActiveProfileData();
+  if(typeof kgSaveActiveProfileData==='function') kgSaveActiveProfileData();
+  alert('Materi ditandai selesai.');
+}
+
+function nextLesson(){
+  if(currentLessonIndex < animationLessons.length - 1){
+    openLesson(currentLessonIndex + 1);
+  } else {
+    alert('Selamat! Anda sudah sampai di materi terakhir kelas Animasi AI.');
+  }
+}
+
+function updateClassProgress(){
+  const pct = Math.round((completedLessons.length / animationLessons.length) * 100);
+  document.getElementById('completedText').textContent = `${completedLessons.length}/${animationLessons.length} selesai`;
+  document.getElementById('classProgressBar').style.width = `${pct}%`;
+}
+
+
+
+document.addEventListener("change", async function(e){
+  if(e.target && e.target.id==="localVideoInput" && e.target.files && e.target.files[0]){
+    const file=e.target.files[0];
+    const status=document.getElementById("videoAdminStatus");
+    const v=document.getElementById("lessonVideo");
+    const s=document.getElementById("lessonVideoSource");
+    try{
+      if(v.dataset.localUrl) URL.revokeObjectURL(v.dataset.localUrl);
+      const url=URL.createObjectURL(file);
+      v.dataset.localUrl=url;
+      s.src=url;
+      v.load();
+      if(status) status.textContent="✓ Video baru sudah dipasang. Sedang menyimpan...";
+      await dbSet("lesson_"+currentLessonIndex,file);
+      if(status) status.textContent="✓ Video berhasil diganti dan disimpan.";
+    }catch(err){
+      if(status) status.textContent="Video sudah diganti untuk sesi ini, tetapi browser tidak mengizinkan penyimpanan permanen.";
+    }
+  }
+});
+</script>
+
+<script>
+
+const quizQuestionBank = [
+ {q:"Apa yang dimaksud dengan animasi AI dalam kelas ini?",o:["Animasi manual frame per frame","Visual bergerak yang dibuat dengan bantuan kecerdasan buatan","Video yang hanya berisi suara","Gambar statis tanpa gerakan"],a:1},
+ {q:"Urutan alur kerja sederhana animasi AI yang benar adalah...",o:["Editing → suara → ide → gambar","Ide → gambar/karakter → gerakan → suara → editing","Suara → gambar → ide → editing","Gambar → editing → ide → suara"],a:1},
+ {q:"Untuk pemula, jenis tools yang dibutuhkan antara lain...",o:["AI ide/skrip, AI gambar, AI video, dan editor video","Hanya spreadsheet","Hanya kamera profesional","Hanya aplikasi musik"],a:0},
+ {q:"Pola cerita sederhana yang digunakan dalam materi adalah...",o:["Pembuka → masalah → aksi → hasil","Judul → iklan → penutup","Musik → gambar → teks","Tokoh → warna → font"],a:0},
+ {q:"Agar karakter AI lebih konsisten, hal yang sebaiknya ditentukan adalah...",o:["Umur, pakaian, warna rambut, gaya visual, ekspresi, dan ciri khas","Hanya nama karakter","Hanya warna latar","Hanya durasi video"],a:0},
+ {q:"Struktur prompt visual yang dipelajari adalah...",o:["Subjek + aksi + tempat + gaya + kamera + pencahayaan + suasana","Judul + tanggal + alamat","Nama + nomor telepon","Musik + volume + durasi saja"],a:0},
+ {q:"Saat membuat gambar untuk setiap adegan, yang perlu dijaga adalah...",o:["Rasio, wajah, pakaian, warna, dan konsistensi karakter","Ukuran file saja","Nama folder saja","Jumlah aplikasi yang dipakai"],a:0},
+ {q:"Gerakan image-to-video yang aman untuk pemula adalah...",o:["Gerakan sederhana seperti berjalan, menoleh, tersenyum, atau slow push-in","Semua objek bergerak cepat sekaligus","Kamera berputar ekstrem","Gerakan acak tanpa arah"],a:0},
+ {q:"Narasi voice-over yang efektif sebaiknya...",o:["Pendek, mudah dipahami, dan sesuai durasi visual","Sangat panjang tanpa jeda","Tidak berhubungan dengan visual","Selalu menggunakan istilah teknis"],a:0},
+ {q:"Pada praktik animasi pertama, target utama yang ditekankan adalah...",o:["Proyek pertama selesai terlebih dahulu, lalu kualitas diperbaiki","Harus langsung sempurna","Harus memakai banyak tools berbayar","Harus berdurasi lebih dari 10 menit"],a:0},
+
+ {q:"Apa langkah pertama sebelum membuat gambar atau karakter animasi AI?",o:["Menentukan ide","Mengunggah video","Menambahkan musik","Mengekspor proyek"],a:0},
+ {q:"Mengapa pemula disarankan menggunakan tools yang paling mudah terlebih dahulu?",o:["Agar proses belajar lebih sederhana dan tidak membingungkan","Agar video selalu berdurasi panjang","Agar tidak perlu membuat ide","Agar semua pekerjaan dilakukan manual"],a:0},
+ {q:"Mengapa hasil gambar dan video sebaiknya disimpan dalam satu folder proyek?",o:["Agar file lebih mudah dikelola saat proses produksi","Agar ukuran video otomatis mengecil","Agar AI bekerja tanpa prompt","Agar tidak perlu editing"],a:0},
+ {q:"Untuk video pendek, sebuah cerita sebaiknya...",o:["Fokus pada satu pesan utama","Memiliki sebanyak mungkin konflik","Tidak mempunyai pembuka","Menggunakan banyak karakter sekaligus"],a:0},
+ {q:"Dalam latihan cerita 4 adegan, setiap adegan disarankan...",o:["Memiliki satu kalimat yang jelas","Memiliki sepuluh paragraf","Tanpa urutan cerita","Berisi daftar tools"],a:0},
+ {q:"Deskripsi karakter yang sama perlu digunakan pada setiap prompt agar...",o:["Karakter lebih konsisten antaradegan","Video otomatis memiliki musik","Durasi menjadi lebih panjang","Editing tidak diperlukan"],a:0},
+ {q:"Manakah yang termasuk ciri karakter yang perlu dijaga konsistensinya?",o:["Pakaian dan warna rambut","Nama file video","Volume speaker HP","Kecepatan internet"],a:0},
+ {q:"Pada struktur prompt, bagian 'aksi' menjelaskan...",o:["Apa yang sedang dilakukan subjek","Nama aplikasi yang digunakan","Ukuran file","Durasi ekspor"],a:0},
+ {q:"Pada struktur prompt, bagian 'tempat' digunakan untuk menjelaskan...",o:["Lokasi atau lingkungan adegan","Jenis mikrofon","Nama folder","Nilai kuis"],a:0},
+ {q:"Apa fungsi keterangan gaya visual dalam prompt?",o:["Mengarahkan tampilan atau estetika gambar","Menentukan kapasitas penyimpanan","Menghapus narasi","Mengatur koneksi internet"],a:0},
+
+ {q:"Mengapa setiap gambar adegan sebaiknya menggunakan rasio yang sama?",o:["Agar tampilan antaradegan lebih konsisten","Agar karakter selalu berbicara","Agar suara otomatis muncul","Agar prompt tidak diperlukan"],a:0},
+ {q:"Jika karakter berubah terlalu jauh pada gambar berikutnya, tindakan yang disarankan adalah...",o:["Mengulangi atau memperbaiki prompt","Menghapus seluruh cerita","Menambah durasi video","Mengganti semua tools"],a:0},
+ {q:"Mengapa terlalu banyak gerakan dalam satu klip sebaiknya dihindari oleh pemula?",o:["Karena gerakan sederhana lebih mudah dikendalikan dan terlihat natural","Karena video tidak boleh bergerak","Karena AI hanya bisa membuat gambar","Karena musik akan terhapus"],a:0},
+ {q:"Apa yang dimaksud dengan slow push-in pada kamera?",o:["Kamera bergerak atau mendekat perlahan ke subjek","Kamera berputar sangat cepat","Kamera berhenti total","Subjek menghilang dari frame"],a:0},
+ {q:"Voice-over digunakan terutama untuk...",o:["Memberikan narasi atau suara yang mendukung cerita","Mengubah rasio gambar","Membuat folder proyek","Menghapus karakter"],a:0},
+ {q:"Untuk video sekitar 30 detik, narasi sebaiknya...",o:["Ringkas dan langsung ke inti","Lebih dari sepuluh menit","Tidak berkaitan dengan gambar","Hanya berisi judul"],a:0},
+ {q:"Pada proses editing, langkah yang dilakukan setelah menyusun klip dapat berupa...",o:["Memasukkan narasi dan menambahkan teks","Menghapus seluruh visual","Membuat cerita dari awal setiap kali","Mengganti perangkat"],a:0},
+ {q:"Sebelum video dipublikasikan, apa yang perlu diperiksa?",o:["Volume, urutan klip, teks, dan durasi","Hanya nama folder","Hanya warna ikon aplikasi","Hanya kapasitas baterai"],a:0},
+ {q:"Dalam tugas akhir mini, jumlah adegan yang disarankan adalah...",o:["4 adegan","20 adegan wajib","1 adegan tanpa cerita","100 adegan"],a:0},
+ {q:"Dalam proyek animasi pertama, mengapa satu gaya visual sebaiknya dipertahankan?",o:["Agar keseluruhan video terlihat konsisten","Agar video tidak membutuhkan suara","Agar semua adegan menjadi sama persis","Agar tidak perlu membuat karakter"],a:0}
+];
+
+let finalQuizQuestions = [];
+
+function shuffleQuizBank(items){
+  const a=[...items];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function makeRandomQuiz(){
+  finalQuizQuestions=shuffleQuizBank(quizQuestionBank).slice(0,10);
+}
+function renderFinalQuiz(){
+  const form=document.getElementById("quizForm");
+  if(!form) return;
+  makeRandomQuiz();
+  form.innerHTML=finalQuizQuestions.map((item,i)=>`
+    <div class="quiz-question">
+      <h4>${i+1}. ${item.q}</h4>
+      ${item.o.map((opt,j)=>`
+        <label class="quiz-option">
+          <input type="radio" name="q${i}" value="${j}">
+          <span>${opt}</span>
+        </label>`).join("")}
+    </div>`).join("");
+  const saved=JSON.parse(localStorage.getItem("kasihgratis_animasi_quiz")||"null");
+  if(saved) showQuizResult(saved.score,saved.correct,saved.passed,false);
+}
+function submitFinalQuiz(){
+  let correct=0,answered=0;
+  finalQuizQuestions.forEach((item,i)=>{
+    const s=document.querySelector(`input[name="q${i}"]:checked`);
+    if(s){answered++; if(Number(s.value)===item.a) correct++;}
+  });
+  if(answered<finalQuizQuestions.length){
+    alert(`Masih ada ${finalQuizQuestions.length-answered} pertanyaan yang belum dijawab.`);
+    return;
+  }
+  const score=correct*10, passed=score>=70;
+  localStorage.setItem("kasihgratis_animasi_quiz",JSON.stringify({score,correct,passed}));
+  showQuizResult(score,correct,passed,true);
+  if(typeof refreshParticipantDashboard==='function') refreshParticipantDashboard();
+}
+function showQuizResult(score,correct,passed,scroll){
+  const box=document.getElementById("quizResult");
+  const cert=document.getElementById("certificateBtn");
+  if(!box) return;
+  box.style.display="block";
+  box.innerHTML=`
+    <div class="${passed?'quiz-pass':'quiz-fail'}" style="font-weight:800">${passed?'✓ SELAMAT, ANDA LULUS':'BELUM LULUS'}</div>
+    <div class="quiz-score">${score}</div>
+    <div>${correct} dari 10 jawaban benar.</div>
+    <div style="margin-top:8px;color:var(--muted);font-size:13px">${passed?'Anda telah melewati nilai minimal 70.':'Nilai minimal kelulusan adalah 70. Silakan ulangi kuis.'}</div>`;
+  if(cert) cert.style.display=passed?"inline-block":"none";
+  if(scroll) box.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetFinalQuiz(){
+  localStorage.removeItem("kasihgratis_animasi_quiz");
+  const b=document.getElementById("quizResult"); if(b) b.style.display="none";
+  const c=document.getElementById("certificateBtn"); if(c) c.style.display="none";
+  renderFinalQuiz();
+  const q=document.getElementById("finalQuiz"); if(q) q.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function showCertificatePreview(){
+  const saved=JSON.parse(localStorage.getItem("kasihgratis_animasi_quiz")||"null");
+  if(!saved || !saved.passed){
+    alert("Sertifikat hanya tersedia untuk peserta yang lulus dengan nilai minimal 70.");
+    return;
+  }
+  const modal=document.getElementById("certModal");
+  const input=document.getElementById("participantName");
+  input.value=localStorage.getItem("kasihgratis_participant_name")||"";
+  modal.style.display="flex";
+  document.getElementById("certificateSheet").style.display="none";
+  document.getElementById("certificateActions").style.display="none";
+}
+function generateCertificate(){
+  const name=document.getElementById("participantName").value.trim();
+  if(!name){alert("Masukkan nama lengkap peserta terlebih dahulu.");return;}
+  const saved=JSON.parse(localStorage.getItem("kasihgratis_animasi_quiz")||"null");
+  if(!saved || !saved.passed){alert("Data kelulusan tidak ditemukan.");return;}
+  localStorage.setItem("kasihgratis_participant_name",name);
+  document.getElementById("certName").textContent=name;
+  document.getElementById("certScore").textContent=saved.score;
+  const now=new Date();
+  document.getElementById("certDate").textContent=now.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("certificateSheet").style.display="flex";
+  document.getElementById("certificateActions").style.display="flex";
+  if(typeof refreshParticipantDashboard==="function") refreshParticipantDashboard();
+}
+function closeCertificate(){
+  document.getElementById("certModal").style.display="none";
+}
+document.addEventListener("DOMContentLoaded",renderFinalQuiz);
+
+</script>
+
+<div id="certModal" class="cert-modal">
+  <div class="cert-panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+      <div>
+        <div style="font-size:12px;color:var(--muted)">SERTIFIKAT KELULUSAN</div>
+        <h3 style="margin:4px 0 0">KasihGratis AI Learning</h3>
+      </div>
+      <button class="icon-btn" onclick="closeCertificate()">×</button>
+    </div>
+    <div class="cert-form">
+      <input id="participantName" type="text" placeholder="Masukkan nama lengkap peserta">
+      <button class="dark-btn" onclick="generateCertificate()">Buat Sertifikat</button>
+    </div>
+    <div id="certificateSheet" class="certificate-sheet" style="display:none">
+      <div class="cert-brand">KASIHGRATIS AI LEARNING</div>
+      <div class="cert-title">SERTIFIKAT KELULUSAN</div>
+      <div class="cert-sub">Diberikan kepada</div>
+      <div id="certName" class="cert-name">Nama Peserta</div>
+      <div class="cert-sub">atas keberhasilannya menyelesaikan kelas</div>
+      <div class="cert-course">Belajar Bikin Animasi AI</div>
+      <div class="cert-sub">dan dinyatakan lulus ujian akhir</div>
+      <div class="cert-meta">
+        <div><strong>Nilai</strong><br><span id="certScore">0</span></div>
+        <div><strong>Tanggal Lulus</strong><br><span id="certDate">-</span></div>
+      </div>
+      <div style="margin-top:30px;font-size:13px;color:#666">KasihGratis AI Learning • 2026</div>
+    </div>
+    <div id="certificateActions" class="cert-actions" style="display:none">
+      <button class="secondary-light-btn" onclick="window.print()">Cetak / Simpan PDF</button>
+      <button class="secondary-light-btn" onclick="closeCertificate()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+function getDashboardCompletedLessons(){
+  try{
+    const raw=JSON.parse(localStorage.getItem("kasihgratis_animasi_completed")||"[]");
+    return Array.isArray(raw)?raw:[];
+  }catch(e){return [];}
+}
+function refreshParticipantDashboard(){
+  const completed=getDashboardCompletedLessons();
+  const total=(typeof animationLessons!=="undefined" && animationLessons.length)?animationLessons.length:10;
+  const done=Math.min(completed.length,total);
+  const pct=Math.round((done/total)*100);
+
+  const savedName=localStorage.getItem("kasihgratis_participant_name")||"Peserta KasihGratis";
+  const nameEl=document.getElementById("dashboardName");
+  const input=document.getElementById("dashboardNameInput");
+  if(nameEl) nameEl.textContent=savedName;
+  if(input) input.value=savedName==="Peserta KasihGratis"?"":savedName;
+
+  const c=document.getElementById("dashMaterialCount");
+  const n=document.getElementById("dashMaterialNote");
+  const pt=document.getElementById("dashProgressText");
+  const pb=document.getElementById("dashProgressBar");
+  if(c) c.textContent=`${done}/${total}`;
+  if(n) n.textContent=done===total?"Semua materi sudah selesai":`${total-done} materi masih tersisa`;
+  if(pt) pt.textContent=`${pct}%`;
+  if(pb) pb.style.width=`${pct}%`;
+
+  let quiz=null;
+  try{quiz=JSON.parse(localStorage.getItem("kasihgratis_animasi_quiz")||"null");}catch(e){}
+  const qs=document.getElementById("dashQuizScore");
+  const qn=document.getElementById("dashQuizNote");
+  const cs=document.getElementById("dashCertStatus");
+  const cn=document.getElementById("dashCertNote");
+  const cb=document.getElementById("dashCertificateBtn");
+
+  if(quiz){
+    if(qs) qs.textContent=quiz.score;
+    if(qn) qn.textContent=quiz.passed?"Lulus ujian akhir":"Belum lulus, silakan ulangi";
+    if(quiz.passed){
+      if(cs) cs.innerHTML='<span class="status-pill status-pass">Tersedia</span>';
+      if(cn) cn.textContent="Sertifikat kelulusan siap diambil";
+      if(cb) cb.style.display="inline-block";
+    }else{
+      if(cs) cs.innerHTML='<span class="status-pill status-wait">Belum tersedia</span>';
+      if(cn) cn.textContent="Nilai minimal lulus adalah 70";
+      if(cb) cb.style.display="none";
+    }
+  }else{
+    if(qs) qs.textContent="—";
+    if(qn) qn.textContent="Belum mengerjakan kuis";
+    if(cs) cs.innerHTML='<span class="status-pill status-wait">Belum tersedia</span>';
+    if(cn) cn.textContent="Lulus kuis untuk membuka sertifikat";
+    if(cb) cb.style.display="none";
+  }
+}
+function saveDashboardName(){
+  const input=document.getElementById("dashboardNameInput");
+  const name=(input?.value||"").trim();
+  if(!name){alert("Masukkan nama lengkap peserta.");return;}
+  localStorage.setItem("kasihgratis_participant_name",name);
+  refreshParticipantDashboard();
+}
+function continueLearning(){
+  const completed=getDashboardCompletedLessons();
+  const total=(typeof animationLessons!=="undefined"&&animationLessons.length)?animationLessons.length:10;
+  let next=0;
+  for(let i=0;i<total;i++){
+    if(!completed.includes(i)){next=i;break;}
+    if(i===total-1) next=total-1;
+  }
+  if(typeof openLearningPath==="function") openLearningPath("animasi");
+  setTimeout(()=>{
+    if(typeof openLesson==="function") openLesson(next);
+  },300);
+}
+function goToFinalQuiz(){
+  const q=document.getElementById("finalQuiz");
+  if(q) q.scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.addEventListener("DOMContentLoaded",()=>setTimeout(refreshParticipantDashboard,100));
+
+</script>
+<script>
+
+const KG_PROFILE_LIST_KEY="kg_profiles_v1";
+const KG_ACTIVE_PROFILE_KEY="kg_active_profile_v1";
+
+function kgNormalizeName(name){
+  return name.trim().replace(/\s+/g," ");
+}
+function kgProfileId(name,pin){
+  return btoa(unescape(encodeURIComponent((name+"|"+pin).toLowerCase()))).replace(/=/g,"");
+}
+function kgGetProfiles(){
+  try{return JSON.parse(localStorage.getItem(KG_PROFILE_LIST_KEY)||"{}")||{};}catch(e){return {};}
+}
+function kgSaveProfiles(p){localStorage.setItem(KG_PROFILE_LIST_KEY,JSON.stringify(p));}
+
+function kgReadCurrentLearningData(){
+  return {
+    completed: localStorage.getItem("kasihgratis_animasi_completed") || "[]",
+    quiz: localStorage.getItem("kasihgratis_animasi_quiz") || "null",
+    participantName: localStorage.getItem("kasihgratis_participant_name") || "",
+    savedAt: Date.now()
+  };
+}
+function kgClearCurrentLearningData(){
+  localStorage.removeItem("kasihgratis_animasi_completed");
+  localStorage.removeItem("kasihgratis_animasi_quiz");
+  localStorage.removeItem("kasihgratis_participant_name");
+}
+function kgLoadLearningData(data,name){
+  kgClearCurrentLearningData();
+  if(data){
+    if(data.completed) localStorage.setItem("kasihgratis_animasi_completed",data.completed);
+    if(data.quiz && data.quiz!=="null") localStorage.setItem("kasihgratis_animasi_quiz",data.quiz);
+  }
+  localStorage.setItem("kasihgratis_participant_name",name);
+}
+function kgSaveActiveProfileData(){
+  const id=localStorage.getItem(KG_ACTIVE_PROFILE_KEY);
+  if(!id) return;
+  const profiles=kgGetProfiles();
+  if(!profiles[id]) return;
+  profiles[id].data=kgReadCurrentLearningData();
+  profiles[id].updatedAt=Date.now();
+  kgSaveProfiles(profiles);
+}
+function kgRefreshProfileUI(){
+  const id=localStorage.getItem(KG_ACTIVE_PROFILE_KEY);
+  const profiles=kgGetProfiles();
+  const p=id?profiles[id]:null;
+  const name=p?.name || "Peserta";
+  const n=document.getElementById("profileActiveName");
+  const i=document.getElementById("profileInitial");
+  if(n) n.textContent=name;
+  if(i) i.textContent=(name.charAt(0)||"P").toUpperCase();
+}
+function loginParticipant(){
+  const name=kgNormalizeName(document.getElementById("loginName").value||"");
+  const pin=(document.getElementById("loginPin").value||"").trim();
+  const status=document.getElementById("loginStatus");
+  if(name.length<3){status.textContent="Masukkan nama lengkap peserta.";return;}
+  if(!/^\d{4}$/.test(pin)){status.textContent="PIN harus 4 digit angka.";return;}
+
+  // Save previous active profile before switching.
+  kgSaveActiveProfileData();
+
+  const id=kgProfileId(name,pin);
+  const profiles=kgGetProfiles();
+
+  if(profiles[id]){
+    if(profiles[id].name.toLowerCase()!==name.toLowerCase()){
+      status.textContent="Nama atau PIN tidak cocok.";return;
+    }
+  }else{
+    profiles[id]={name:name,createdAt:Date.now(),updatedAt:Date.now(),data:null};
+  }
+
+  kgSaveProfiles(profiles);
+  localStorage.setItem(KG_ACTIVE_PROFILE_KEY,id);
+  kgLoadLearningData(profiles[id].data,name);
+
+  document.getElementById("loginOverlay").style.display="none";
+  kgRefreshProfileUI();
+  if(typeof refreshParticipantDashboard==="function") refreshParticipantDashboard();
+  if(typeof renderLessons==="function") renderLessons();
+  if(typeof updateClassProgress==="function") updateClassProgress();
+  if(typeof renderFinalQuiz==="function") renderFinalQuiz();
+}
+function logoutParticipant(){
+  kgSaveActiveProfileData();
+  localStorage.removeItem(KG_ACTIVE_PROFILE_KEY);
+  kgClearCurrentLearningData();
+  document.getElementById("loginName").value="";
+  document.getElementById("loginPin").value="";
+  document.getElementById("loginStatus").textContent="";
+  document.getElementById("loginOverlay").style.display="flex";
+}
+function kgAutoLogin(){
+  const id=localStorage.getItem(KG_ACTIVE_PROFILE_KEY);
+  const profiles=kgGetProfiles();
+  if(id && profiles[id]){
+    kgLoadLearningData(profiles[id].data,profiles[id].name);
+    document.getElementById("loginOverlay").style.display="none";
+    kgRefreshProfileUI();
+    setTimeout(()=>{
+      if(typeof refreshParticipantDashboard==="function") refreshParticipantDashboard();
+      if(typeof renderLessons==="function") renderLessons();
+      if(typeof updateClassProgress==="function") updateClassProgress();
+      if(typeof renderFinalQuiz==="function") renderFinalQuiz();
+    },100);
+  }else{
+    document.getElementById("loginOverlay").style.display="flex";
+  }
+}
+window.addEventListener("beforeunload",kgSaveActiveProfileData);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")kgSaveActiveProfileData();});
+document.addEventListener("DOMContentLoaded",()=>setTimeout(kgAutoLogin,50));
+
+</script>
+
+<div id="adminLoginModal" class="admin-modal">
+  <div class="admin-box">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+      <div>
+        <div class="eyebrow muted">🔐 AREA ADMIN</div>
+        <h3>Login Admin</h3>
+      </div>
+      <button class="icon-btn" onclick="closeAdminLogin()">×</button>
+    </div>
+    <p>Menu ini hanya untuk pengelola materi. Versi ini masih tahap panel admin; penggantian file server akan disambungkan pada tahap berikutnya.</p>
+    <div class="admin-field">
+      <label>Username</label>
+      <input id="adminUser" type="text" placeholder="admin">
+    </div>
+    <div class="admin-field">
+      <label>PIN Admin</label>
+      <input id="adminPin" type="password" inputmode="numeric" maxlength="6" placeholder="••••••">
+    </div>
+    <div class="admin-actions">
+      <button class="dark-btn" onclick="loginAdmin()">Masuk Admin</button>
+      <button class="secondary-light-btn" onclick="closeAdminLogin()">Batal</button>
+    </div>
+    <div id="adminLoginStatus" style="font-size:12px;margin-top:10px;color:#a33"></div>
+  </div>
+</div>
+
+<div id="adminPanel" class="admin-panel">
+  <div class="admin-panel-inner">
+    <div class="admin-panel-head">
+      <div>
+        <div class="eyebrow muted">⚙️ DASHBOARD ADMIN</div>
+        <h2 style="margin:6px 0 4px">Kelola Materi Video</h2>
+        <div style="color:var(--muted);font-size:13px">Kelola video Materi 1–10 dari satu halaman.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary-light-btn" onclick="adminBackToSite()">Lihat Website</button>
+        <button class="secondary-light-btn" onclick="logoutAdmin()">Keluar Admin</button>
+      </div>
+    </div>
+    
+    <div class="admin-summary-grid">
+      <div class="stat-card"><div class="stat-label">Total Materi</div><div class="stat-value" style="font-size:24px">10</div></div>
+      <div class="stat-card"><div class="stat-label">Video Revisi</div><div class="stat-value" style="font-size:24px">1</div><div class="stat-note">Materi 1 terbaru</div></div>
+      <div class="stat-card"><div class="stat-label">Status Website</div><div class="stat-value" style="font-size:18px">Aktif</div><div class="stat-note">GitHub + Netlify</div></div>
+    </div>
+
+    <div class="admin-material-list">
+
+    <div class="admin-material">
+      <div class="admin-num">1</div>
+      <div>
+        <strong>Pengenalan Animasi AI</strong>
+        <small>File aktif: materi1-baru.mp4</small><span class="admin-latest-chip">✓ Video revisi terbaru</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="materi1-baru.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus1">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(1,'materi1-baru.mp4')">Ganti Video</button>
+            <button onclick="window.open('materi1-baru.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">2</div>
+      <div>
+        <strong>Tools yang Dibutuhkan</strong>
+        <small>File aktif: materi2.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="materi2.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus2">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(2,'materi2.mp4')">Ganti Video</button>
+            <button onclick="window.open('materi2.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">3</div>
+      <div>
+        <strong>Membuat Ide & Cerita</strong>
+        <small>File aktif: Materi3.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi3.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus3">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(3,'Materi3.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi3.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">4</div>
+      <div>
+        <strong>Membuat Karakter AI</strong>
+        <small>File aktif: Materi4.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi4.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus4">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(4,'Materi4.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi4.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">5</div>
+      <div>
+        <strong>Membuat Prompt</strong>
+        <small>File aktif: Materi5.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi5.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus5">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(5,'Materi5.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi5.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">6</div>
+      <div>
+        <strong>Membuat Gambar</strong>
+        <small>File aktif: Materi6.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi6.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus6">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(6,'Materi6.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi6.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">7</div>
+      <div>
+        <strong>Mengubah Gambar Menjadi Video</strong>
+        <small>File aktif: Materi7.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi7.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus7">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(7,'Materi7.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi7.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">8</div>
+      <div>
+        <strong>Membuat Suara / Narasi</strong>
+        <small>File aktif: Materi8.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi8.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus8">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(8,'Materi8.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi8.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">9</div>
+      <div>
+        <strong>Editing Video</strong>
+        <small>File aktif: Materi9.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi9.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus9">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(9,'Materi9.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi9.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="admin-material">
+      <div class="admin-num">10</div>
+      <div>
+        <strong>Praktik Animasi Pertama</strong>
+        <small>File aktif: Materi10.mp4</small><span class="admin-current-chip">Video aktif</span>
+      </div>
+      <div class="admin-video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="Materi10.mp4" type="video/mp4">
+          Browser tidak mendukung pemutar video.
+        </video>
+        <div class="admin-video-meta">
+          <div class="admin-status" id="adminStatus10">Status: video aktif tersedia di website</div>
+          <div class="admin-video-actions">
+            <button onclick="adminChooseVideo(10,'Materi10.mp4')">Ganti Video</button>
+            <button onclick="window.open('Materi10.mp4','_blank')">Buka Video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    </div>
+    <div class="admin-note">
+      <strong>Penting:</strong> pada versi GitHub + Netlify yang sekarang, tombol “Ganti Video” belum dapat mengubah file di server secara langsung.
+      Saat tombol ditekan, admin dapat memilih file baru dan melihat nama file yang dipilih. Tahap berikutnya adalah menyambungkan panel ini ke penyimpanan online/backend,
+      sehingga hanya admin yang dapat mengunggah dan mengganti video tanpa masuk GitHub.
+    </div>
+  </div>
+</div>
+
+<input id="adminVideoPicker" type="file" accept="video/*" style="display:none">
+
+<script>
+
+const KG_ADMIN_SESSION_KEY="kg_admin_session_v1";
+let kgAdminTarget={lesson:0,filename:""};
+
+function openAdminLogin(){
+  if(sessionStorage.getItem(KG_ADMIN_SESSION_KEY)==="1"){
+    openAdminPanel();
+    return;
+  }
+  document.getElementById("adminLoginModal").style.display="flex";
+}
+function closeAdminLogin(){
+  document.getElementById("adminLoginModal").style.display="none";
+  const s=document.getElementById("adminLoginStatus");
+  if(s) s.textContent="";
+}
+function loginAdmin(){
+  const u=(document.getElementById("adminUser").value||"").trim().toLowerCase();
+  const p=(document.getElementById("adminPin").value||"").trim();
+  const s=document.getElementById("adminLoginStatus");
+
+  // Prototype-only credential gate. This is not strong server-side security.
+  if(u==="admin" && p==="260826"){
+    sessionStorage.setItem(KG_ADMIN_SESSION_KEY,"1");
+    closeAdminLogin();
+    openAdminPanel();
+  }else{
+    s.textContent="Username atau PIN admin salah.";
+  }
+}
+function openAdminPanel(){
+  document.getElementById("adminPanel").style.display="block";
+  document.body.style.overflow="hidden";
+}
+function adminBackToSite(){
+  document.getElementById("adminPanel").style.display="none";
+  document.body.style.overflow="";
+}
+function logoutAdmin(){
+  sessionStorage.removeItem(KG_ADMIN_SESSION_KEY);
+  adminBackToSite();
+  alert("Admin sudah keluar.");
+}
+function adminChooseVideo(lesson,filename){
+  if(sessionStorage.getItem(KG_ADMIN_SESSION_KEY)!=="1"){
+    openAdminLogin();
+    return;
+  }
+  kgAdminTarget={lesson,filename};
+  const picker=document.getElementById("adminVideoPicker");
+  picker.value="";
+  picker.click();
+}
+document.addEventListener("change",function(e){
+  if(e.target && e.target.id==="adminVideoPicker" && e.target.files && e.target.files[0]){
+    const f=e.target.files[0];
+    const s=document.getElementById("adminStatus"+kgAdminTarget.lesson);
+    if(s){
+      s.textContent="Video baru dipilih: "+f.name+" — belum mengganti video di server.";
+      s.style.color="#8b6400";
+    }
+    alert(
+      "Video baru sudah dipilih untuk Materi "+kgAdminTarget.lesson+
+      "\\n\\nFile: "+f.name+
+      "\\n\\nAgar benar-benar mengganti video di website, upload file ini ke GitHub dengan nama persis: "+kgAdminTarget.filename
+    );
+  }
+});
+</script>
+<script>
+
+const gambarLessons = [
+  {title:"Pengenalan Gambar AI",subtitle:"Kenali apa itu gambar AI, cara kerjanya, dan mulai praktik sederhana.",video:"gambar1.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Setelah menyelesaikan materi ini, peserta memahami apa itu gambar AI, bagaimana AI menghasilkan gambar, dan apa saja yang dapat dibuat menggunakan AI.</p>
+<h4>Apa Itu Gambar AI?</h4>
+<p>Gambar AI adalah gambar yang dibuat atau dikembangkan dengan bantuan Artificial Intelligence (AI). Kita cukup memberikan instruksi berupa teks yang disebut prompt, kemudian AI akan menerjemahkan instruksi tersebut menjadi sebuah gambar.</p>
+<h4>Apa yang Bisa Dibuat?</h4>
+<p>Dengan AI, kita dapat membuat karakter, ilustrasi cerita, gambar realistis, poster, thumbnail, gambar produk, konten media sosial, sampai bahan visual untuk video animasi.</p>
+<h4>Rumus Sederhana</h4>
+<p><strong>IDE → PROMPT → GENERATE → CEK HASIL → PERBAIKI PROMPT</strong></p>
+<p>Tentukan dahulu apa yang ingin dibuat, tuliskan instruksinya, buat gambar dengan AI, periksa hasilnya, lalu perbaiki prompt jika hasil belum sesuai.</p>
+<h4>Latihan</h4>
+<p>Buat 1 gambar AI sederhana dengan menentukan subjek, aktivitas, tempat, dan gaya gambar.</p>
+<ul><li>Subjek: kucing putih</li><li>Aktivitas: membaca buku</li><li>Tempat: perpustakaan</li><li>Gaya: animasi 3D</li></ul>
+<h4>Tugas Materi 1</h4>
+<p>Buat 1 gambar AI berdasarkan ide sendiri. Tidak perlu mengejar hasil sempurna. Fokus utama adalah memahami bahwa hasil gambar sangat dipengaruhi oleh prompt yang kita berikan.</p>`,prompt:"Buat gambar seorang anak laki-laki berusia 10 tahun sedang membaca buku di perpustakaan, memakai kaos kuning dan celana biru, ekspresi ceria, gaya animasi 3D, pencahayaan lembut, detail tinggi."},
+
+  {title:"Mengenal Tools Pembuat Gambar AI",subtitle:"Kenali fungsi tools dan pilih yang paling sesuai untuk pemula.",video:"gambar2.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mengenal fungsi dasar tools pembuat gambar AI dan memahami bahwa setiap tools dapat memiliki kelebihan yang berbeda.</p>
+<h4>Jenis Tools yang Dibutuhkan</h4>
+<p>Secara sederhana, peserta membutuhkan tools untuk membuat gambar AI dan aplikasi pendukung untuk menyimpan, mengatur ukuran, atau menambahkan teks.</p>
+<h4>Cara Memilih Tools</h4>
+<ul><li>Mudah digunakan oleh pemula.</li><li>Mendukung prompt dalam bahasa yang dipahami.</li><li>Memiliki pilihan rasio gambar.</li><li>Hasil gambar mudah disimpan.</li><li>Coba versi gratis terlebih dahulu sebelum berlangganan.</li></ul>
+<h4>Alur Kerja Sederhana</h4>
+<p><strong>TULIS PROMPT → GENERATE → PILIH HASIL → SIMPAN → EDIT JIKA PERLU</strong></p>
+<h4>Latihan</h4>
+<p>Pilih satu tools gambar AI yang tersedia, masukkan prompt sederhana, lalu bandingkan dua hasil gambar yang dihasilkan.</p>
+<h4>Tugas Materi 2</h4>
+<p>Tuliskan nama tools yang digunakan dan satu alasan mengapa tools tersebut terasa mudah atau sulit digunakan.</p>`,prompt:"Buat gambar sebuah meja kerja modern dengan laptop, tanaman kecil, buku catatan, dan secangkir kopi, gaya realistis, pencahayaan pagi yang lembut."},
+
+  {title:"Dasar-Dasar Prompt Gambar",subtitle:"Belajar menyusun prompt yang jelas agar hasil lebih terarah.",video:"gambar3.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu menyusun prompt sederhana menggunakan unsur-unsur penting dalam gambar.</p>
+<h4>Struktur Prompt Dasar</h4>
+<p><strong>SUBJEK + AKTIVITAS + TEMPAT + GAYA + CAHAYA + SUASANA + KOMPOSISI</strong></p>
+<p>Prompt tidak harus panjang, tetapi harus jelas. Semakin spesifik informasi yang diberikan, semakin mudah AI memahami keinginan kita.</p>
+<h4>Contoh</h4>
+<p>Seorang perempuan sedang membaca buku di kafe, gaya ilustrasi digital, cahaya sore hangat, suasana tenang, komposisi medium shot.</p>
+<h4>Latihan</h4>
+<p>Buat tiga prompt dengan subjek yang sama tetapi tempat atau suasananya berbeda.</p>
+<h4>Tugas Materi 3</h4>
+<p>Buat satu prompt lengkap minimal memuat subjek, aktivitas, lokasi, gaya, dan pencahayaan.</p>`,prompt:"Seorang anak perempuan sedang menggambar di meja belajar, kamar yang rapi, gaya ilustrasi 3D lembut, pencahayaan pagi, suasana hangat dan ceria, medium shot."},
+
+  {title:"Menentukan Subjek dan Karakter",subtitle:"Buat subjek atau karakter yang jelas dan mudah dipertahankan.",video:"gambar4.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu mendeskripsikan subjek atau karakter secara rinci agar hasil gambar lebih konsisten.</p>
+<h4>Elemen Karakter</h4>
+<ul><li>Usia atau rentang usia.</li><li>Jenis pakaian dan warna.</li><li>Rambut dan ciri wajah.</li><li>Ekspresi.</li><li>Postur atau aktivitas.</li><li>Ciri khas yang tidak berubah.</li></ul>
+<h4>Mengapa Konsistensi Penting?</h4>
+<p>Jika karakter akan digunakan pada beberapa gambar, deskripsi utama sebaiknya diulang dengan kata-kata yang sama agar identitas visualnya tidak banyak berubah.</p>
+<h4>Latihan</h4>
+<p>Buat satu profil karakter lengkap dalam 5–7 ciri.</p>
+<h4>Tugas Materi 4</h4>
+<p>Generate dua gambar karakter yang sama dalam dua aktivitas berbeda dan periksa apakah wajah, pakaian, dan ciri khasnya masih serupa.</p>`,prompt:"Seorang wanita usia 30 tahun, rambut hitam sebahu, blazer krem, kaus putih, ekspresi ramah, postur percaya diri, gaya 3D semi realistis, detail wajah konsisten."},
+
+  {title:"Menentukan Style / Gaya Gambar",subtitle:"Pilih gaya visual yang sesuai dengan tujuan konten.",video:"gambar5.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mengenal beberapa gaya visual dan mampu memilih gaya yang sesuai dengan kebutuhan.</p>
+<h4>Contoh Gaya Visual</h4>
+<ul><li>Realistis / photorealistic.</li><li>3D cartoon.</li><li>Flat illustration.</li><li>Watercolor.</li><li>Cinematic.</li><li>Minimalis.</li><li>Product photography.</li></ul>
+<h4>Tips Memilih Gaya</h4>
+<p>Gunakan satu gaya utama untuk satu proyek agar tampilan lebih konsisten. Untuk konten edukasi anak, gaya 3D atau ilustrasi sering terasa ringan. Untuk produk, gaya fotografi biasanya lebih cocok.</p>
+<h4>Latihan</h4>
+<p>Gunakan satu prompt yang sama, lalu ubah hanya bagian gaya visualnya menjadi tiga versi berbeda.</p>
+<h4>Tugas Materi 5</h4>
+<p>Pilih satu gaya favorit dan jelaskan singkat mengapa gaya tersebut cocok untuk konten yang ingin dibuat.</p>`,prompt:"Sebuah rumah kecil di tepi danau saat pagi hari, gaya 3D cartoon premium, detail bersih, warna harmonis, pencahayaan lembut, suasana tenang."},
+
+  {title:"Mengatur Background dan Suasana",subtitle:"Buat latar dan mood yang mendukung cerita visual.",video:"gambar6.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu menentukan background, waktu, cuaca, dan suasana agar gambar terasa lebih hidup.</p>
+<h4>Elemen Background</h4>
+<ul><li>Lokasi: rumah, kantor, pantai, pasar, sekolah, dan lain-lain.</li><li>Waktu: pagi, siang, sore, malam.</li><li>Cuaca: cerah, mendung, hujan.</li><li>Detail latar: sederhana atau ramai.</li><li>Suasana: hangat, misterius, ceria, tenang, profesional.</li></ul>
+<h4>Tips</h4>
+<p>Background sebaiknya mendukung subjek, bukan mengalahkan perhatian terhadap subjek utama.</p>
+<h4>Latihan</h4>
+<p>Buat satu karakter yang sama dalam tiga background berbeda.</p>
+<h4>Tugas Materi 6</h4>
+<p>Buat satu gambar dengan background dan suasana yang jelas, lalu tuliskan bagian prompt yang paling memengaruhi mood gambar.</p>`,prompt:"Karakter utama berdiri di ruang kerja modern, background minimalis, suasana pagi, cahaya matahari masuk dari jendela, depth of field lembut, mood profesional dan nyaman."},
+
+  {title:"Warna, Cahaya, dan Komposisi",subtitle:"Atur tampilan agar gambar lebih menarik dan profesional.",video:"gambar7.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta memahami peran warna, pencahayaan, dan komposisi dalam membangun fokus visual.</p>
+<h4>Warna</h4>
+<p>Warna hangat seperti krem, kuning, dan oranye dapat memberi kesan ramah. Warna dingin seperti biru dapat memberi kesan tenang atau profesional.</p>
+<h4>Cahaya</h4>
+<p>Cahaya dapat berasal dari matahari, studio light, soft light, dramatic light, atau backlight.</p>
+<h4>Komposisi</h4>
+<p>Atur posisi subjek dengan istilah seperti close-up, medium shot, wide shot, centered composition, atau rule of thirds.</p>
+<h4>Latihan</h4>
+<p>Buat dua gambar yang sama: satu dengan warm lighting dan satu dengan cool lighting. Bandingkan suasananya.</p>
+<h4>Tugas Materi 7</h4>
+<p>Buat satu prompt yang memuat warna utama, jenis lighting, dan komposisi.</p>`,prompt:"Seorang kreator konten duduk di meja kerja, komposisi rule of thirds, warm lighting, warna krem dan emas, kontras lembut, subjek utama tajam, background sedikit blur."},
+
+  {title:"Membuat Gambar Produk & Konten",subtitle:"Praktik membuat visual untuk promosi dan media sosial.",video:"gambar8.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu membuat visual AI sederhana untuk produk, poster, thumbnail, dan konten media sosial.</p>
+<h4>Gambar Produk</h4>
+<p>Perhatikan posisi produk, background, pencahayaan, dan ruang kosong jika akan ditambahkan teks.</p>
+<h4>Konten Media Sosial</h4>
+<p>Sesuaikan rasio gambar dengan kebutuhan. Contohnya 1:1 untuk kotak, 4:5 untuk feed vertikal, atau 9:16 untuk story dan reels.</p>
+<h4>Tips Prompt Produk</h4>
+<ul><li>Sebut jenis produk dengan jelas.</li><li>Tentukan bahan permukaan atau meja.</li><li>Pilih pencahayaan studio atau natural.</li><li>Minta ruang kosong untuk teks jika diperlukan.</li></ul>
+<h4>Latihan</h4>
+<p>Buat satu visual produk dengan dua background berbeda.</p>
+<h4>Tugas Materi 8</h4>
+<p>Buat satu gambar promosi produk dengan rasio 4:5 dan sisakan area kosong untuk judul atau harga.</p>`,prompt:"Foto produk premium berupa botol minuman di atas meja marmer, pencahayaan studio lembut, background elegan dan bersih, bayangan realistis, ruang kosong di bagian atas untuk teks promosi, rasio 4:5."},
+
+  {title:"Memperbaiki dan Mengedit Gambar AI",subtitle:"Kenali bagian yang perlu direvisi dan perbaiki hasilnya.",video:"gambar9.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu mengevaluasi hasil gambar dan melakukan revisi secara terarah.</p>
+<h4>Apa yang Perlu Dicek?</h4>
+<ul><li>Wajah dan ekspresi.</li><li>Tangan dan jari.</li><li>Bentuk objek.</li><li>Warna dan pencahayaan.</li><li>Background.</li><li>Konsistensi karakter.</li><li>Teks yang muncul pada gambar.</li></ul>
+<h4>Cara Revisi</h4>
+<p>Jangan langsung mengganti seluruh prompt. Pertahankan bagian yang sudah benar, kemudian jelaskan bagian yang ingin diperbaiki.</p>
+<h4>Latihan</h4>
+<p>Pilih satu gambar yang belum sempurna dan tuliskan tiga hal yang ingin diperbaiki.</p>
+<h4>Tugas Materi 9</h4>
+<p>Buat versi revisi dari satu gambar lama dan bandingkan sebelum serta sesudahnya.</p>`,prompt:"Perbaiki gambar ini tanpa mengubah karakter utama. Rapikan tangan dan jari, pertahankan wajah, pakaian, warna, dan komposisi. Perbaiki pencahayaan agar lebih natural dan pertahankan gaya visual yang sama."},
+
+  {title:"Praktik Membuat Gambar AI dari Awal",subtitle:"Gabungkan seluruh materi menjadi satu proyek akhir.",video:"gambar10.mp4",body:`<h4>Tujuan Pembelajaran</h4>
+<p>Peserta mampu membuat satu proyek gambar AI lengkap mulai dari ide sampai hasil akhir siap digunakan.</p>
+<h4>Langkah Proyek</h4>
+<ol><li>Tentukan tujuan gambar.</li><li>Pilih subjek atau karakter.</li><li>Tentukan aktivitas dan lokasi.</li><li>Pilih gaya visual.</li><li>Tentukan warna, lighting, dan komposisi.</li><li>Tulis prompt lengkap.</li><li>Generate gambar.</li><li>Cek hasil.</li><li>Perbaiki prompt jika diperlukan.</li><li>Simpan hasil akhir.</li></ol>
+<h4>Proyek Akhir</h4>
+<p>Buat satu visual yang dapat digunakan untuk kebutuhan nyata, misalnya konten edukasi, poster, thumbnail, ilustrasi, atau promosi produk.</p>
+<h4>Checklist Hasil</h4>
+<ul><li>Subjek sudah jelas.</li><li>Gaya visual konsisten.</li><li>Background mendukung.</li><li>Warna dan cahaya sesuai.</li><li>Komposisi nyaman dilihat.</li><li>Tidak ada detail penting yang rusak.</li></ul>
+<h4>Tugas Materi 10</h4>
+<p>Simpan prompt final dan gambar final sebagai portofolio pertama dari kelas Gambar AI.</p>`,prompt:"Bantu saya membuat proyek gambar AI dari nol. Buat konsep lengkap untuk konten edukasi: tentukan subjek, aktivitas, lokasi, gaya visual, warna, lighting, komposisi, prompt utama, serta tiga versi prompt revisi."}
+];
+
+let currentGambarLessonIndex=0;
+let gambarCompleted=JSON.parse(localStorage.getItem("kasihgratis_gambar_completed")||"[]");
+
+function openGambarClass(){
+  document.getElementById("gambarClass").style.display="block";
+  renderGambarLessons();
+  updateGambarProgress();
+  document.getElementById("gambarClass").scrollIntoView({behavior:"smooth"});
+}
+function renderGambarLessons(){
+  const list=document.getElementById("gambarLessonList");
+  list.innerHTML=gambarLessons.map((lesson,i)=>`
+    <button class="lesson-item" onclick="openGambarLesson(${i})">
+      <div class="lesson-badge">${i+1}</div>
+      <div class="lesson-info"><strong>${lesson.title}</strong><span>${lesson.subtitle}</span></div>
+      <div class="lesson-check">${gambarCompleted.includes(i)?"✓":"›"}</div>
+    </button>`).join("");
+}
+function openGambarLesson(index){
+  currentGambarLessonIndex=index;
+  const lesson=gambarLessons[index];
+  document.getElementById("gambarLessonNumber").textContent=`Materi ${index+1} dari ${gambarLessons.length}`;
+  document.getElementById("gambarLessonTitle").textContent=lesson.title;
+  document.getElementById("gambarLessonBody").innerHTML=lesson.body;
+  document.getElementById("gambarPromptText").textContent=lesson.prompt;
+  document.getElementById("gambarLessonVideoSource").src=lesson.video;
+  document.getElementById("gambarLessonVideo").load();
+  document.getElementById("gambarLessonDetail").style.display="block";
+  setTimeout(()=>document.getElementById("gambarLessonDetail").scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function closeGambarLesson(){document.getElementById("gambarLessonDetail").style.display="none";document.getElementById("gambarLessonList").scrollIntoView({behavior:"smooth"});}
+function closeGambarClass(){document.getElementById("gambarLessonDetail").style.display="none";document.getElementById("gambarClass").style.display="none";document.getElementById("beranda").scrollIntoView({behavior:"smooth"});}
+function copyGambarPrompt(){
+  const text=document.getElementById("gambarPromptText").textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert("Prompt berhasil disalin."));}
+}
+function markGambarComplete(){
+  if(!gambarCompleted.includes(currentGambarLessonIndex)){
+    gambarCompleted.push(currentGambarLessonIndex);
+    localStorage.setItem("kasihgratis_gambar_completed",JSON.stringify(gambarCompleted));
+  }
+  renderGambarLessons();updateGambarProgress();alert("Materi Gambar AI ditandai selesai.");
+}
+function nextGambarLesson(){if(currentGambarLessonIndex<gambarLessons.length-1)openGambarLesson(currentGambarLessonIndex+1);else alert("Selamat! Anda sudah sampai di materi terakhir kelas Gambar AI.");}
+function updateGambarProgress(){
+  const pct=Math.round((gambarCompleted.length/gambarLessons.length)*100);
+  document.getElementById("gambarCompletedText").textContent=`${gambarCompleted.length}/${gambarLessons.length} selesai`;
+  document.getElementById("gambarProgressBar").style.width=`${pct}%`;
+}
+
+</script>
+</body>
+</html>
