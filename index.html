@@ -733,6 +733,7 @@ footer strong{color:#111}
             <button type="button" class="dark-btn" onclick="submitFinalQuiz()">Kirim Jawaban</button>
             <button type="button" class="secondary-light-btn" onclick="resetFinalQuiz()">Ulangi Kuis</button>
             <button type="button" id="certificateBtn" class="secondary-light-btn certificate-btn" onclick="showCertificatePreview()">Ambil Sertifikat</button>
+            <button type="button" class="secondary-light-btn" onclick="backToAnimasiMaterials()">← Kembali ke Materi Animasi AI</button>
           </div>
           <div id="quizResult" class="quiz-result" style="display:none"></div>
         </div>
@@ -1230,6 +1231,16 @@ function showQuizResult(score,correct,passed,scroll){
   if(cert) cert.style.display=passed?"inline-block":"none";
   if(scroll) box.scrollIntoView({behavior:"smooth",block:"center"});
 }
+function backToAnimasiMaterials(){
+  const cls=document.getElementById("animasiClass");
+  if(cls){
+    cls.style.display="block";
+    renderLessons();
+    updateClassProgress();
+    cls.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+}
+
 function resetFinalQuiz(){
   localStorage.removeItem("kasihgratis_animasi_quiz");
   const b=document.getElementById("quizResult"); if(b) b.style.display="none";
