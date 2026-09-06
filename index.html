@@ -2033,5 +2033,58 @@ function updateGambarProgress(){
 }
 
 </script>
+
+<script>
+function kgAnimasiCompletedCount(){
+  try{
+    const raw=JSON.parse(localStorage.getItem("kasihgratis_animasi_completed")||"[]");
+    return Array.isArray(raw) ? new Set(raw.map(String)).size : 0;
+  }catch(e){ return 0; }
+}
+function kgQuizUnlocked(){ return kgAnimasiCompletedCount() >= 10; }
+
+function kgRefreshQuizGate(){
+  const unlocked=kgQuizUnlocked();
+  const badge=document.getElementById("quizLockBadge");
+  const notice=document.getElementById("quizLockedNotice");
+  if(badge){
+    badge.textContent=unlocked ? "🔓 Terbuka" : "🔒 Terkunci";
+    badge.style.color=unlocked ? "#18794e" : "#777";
+  }
+  if(notice) notice.style.display=unlocked ? "none" : "block";
+  ["quizCounter","quizQuestion","quizOptions","nextQuizBtn","finishQuizBtn"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=unlocked ? "" : "none";
+  });
+  return unlocked;
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  kgRefreshQuizGate();
+
+  if(typeof renderQuiz==="function"){
+    const originalRenderQuiz=renderQuiz;
+    renderQuiz=function(){
+      if(!kgRefreshQuizGate()) return;
+      return originalRenderQuiz.apply(this,arguments);
+    };
+  }
+  if(typeof nextQuiz==="function"){
+    const originalNextQuiz=nextQuiz;
+    nextQuiz=function(){
+      if(!kgQuizUnlocked()){ kgRefreshQuizGate(); return; }
+      return originalNextQuiz.apply(this,arguments);
+    };
+  }
+  if(typeof finishQuiz==="function"){
+    const originalFinishQuiz=finishQuiz;
+    finishQuiz=function(){
+      if(!kgQuizUnlocked()){ kgRefreshQuizGate(); return; }
+      return originalFinishQuiz.apply(this,arguments);
+    };
+  }
+});
+</script>
+
 </body>
 </html>
